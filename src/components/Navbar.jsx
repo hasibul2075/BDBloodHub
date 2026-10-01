@@ -126,19 +126,15 @@ function Navbar() {
         <div className="nav-btns">
           {user ? (
             <>
-              <a
+ <a
   href="/my-profile"
   className="user-profile-link"
   title="My Profile"
 >
   <FaUserCircle className="user-profile-icon" />
-  <a
-  href="/my-profile"
-  className="user-greeting"
-  onClick={() => setMenuOpen(false)}
->
-  Hi, {userName}
-</a>
+  <span className="user-greeting">
+    Hi, {userName}
+  </span>
 </a>
 
               <button
@@ -246,23 +242,25 @@ function Navbar() {
         </a>
 
         <div className="mobile-menu-buttons">
-          {user ? (
-  <>
-    <span className="user-greeting">
-      Hi, {userName}
-    </span>
+  {user ? (
+    <>
+      <a
+        href="/my-profile"
+        className="user-greeting"
+        onClick={() => setMenuOpen(false)}
+      >
+        Hi, {userName}
+      </a>
 
-  
-
-    <button
-      type="button"
-      className="login-btn"
-      onClick={handleLogout}
-    >
-      Logout
-    </button>
-  </>
-) : (
+      <button
+        type="button"
+        className="login-btn"
+        onClick={handleLogout}
+      >
+        Logout
+      </button>
+    </>
+  ) : (
             <>
               <a
                 href="/login"
