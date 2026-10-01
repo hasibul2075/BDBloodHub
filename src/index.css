@@ -6267,3 +6267,20 @@ body {
   justify-content: center;
   text-align: center;
 }
+.user-greeting {
+  display: flex;
+  align-items: center;
+  line-height: 1;
+  white-space: nowrap;
+
+  color: #1f2937;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.user-greeting:hover,
+.user-greeting:visited,
+.user-greeting:active {
+  color: #1f2937;
+  text-decoration: none;
+}
