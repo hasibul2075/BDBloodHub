@@ -243,20 +243,28 @@ function Navbar() {
 
         <div className="mobile-menu-buttons">
           {user ? (
-            <>
-              <span className="user-greeting">
-                Hi, {userName}
-              </span>
+  <>
+    <span className="user-greeting">
+      Hi, {userName}
+    </span>
 
-              <button
-                type="button"
-                className="login-btn"
-                onClick={handleLogout}
-              >
-                Logout
-              </button>
-            </>
-          ) : (
+    <a
+      href="/my-profile"
+      className="register-btn"
+      onClick={() => setMenuOpen(false)}
+    >
+      My Profile
+    </a>
+
+    <button
+      type="button"
+      className="login-btn"
+      onClick={handleLogout}
+    >
+      Logout
+    </button>
+  </>
+) : (
             <>
               <a
                 href="/login"
