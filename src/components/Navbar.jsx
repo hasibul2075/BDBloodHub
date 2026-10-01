@@ -132,9 +132,13 @@ function Navbar() {
   title="My Profile"
 >
   <FaUserCircle className="user-profile-icon" />
-  <span className="user-greeting">
-    Hi, {userName}
-  </span>
+  <a
+  href="/my-profile"
+  className="user-greeting"
+  onClick={() => setMenuOpen(false)}
+>
+  Hi, {userName}
+</a>
 </a>
 
               <button
@@ -248,13 +252,7 @@ function Navbar() {
       Hi, {userName}
     </span>
 
-    <a
-      href="/my-profile"
-      className="register-btn"
-      onClick={() => setMenuOpen(false)}
-    >
-      My Profile
-    </a>
+  
 
     <button
       type="button"
