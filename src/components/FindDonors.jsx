@@ -10,6 +10,8 @@ import {
 } from "react-icons/fa";
 
 function FindDonors() {
+  const [selectedDonor, setSelectedDonor] = useState(null);
+  const [copied, setCopied] = useState(false);
   const params = new URLSearchParams(window.location.search);
 
   const initialBlood = params.get("blood") || "All";
@@ -153,8 +155,8 @@ function FindDonors() {
       const query = queryParams.toString();
 
       const url = `https://bdbloodhub-backend.onrender.com/api/donors/search${
-        query ? `?${query}` : ""
-      }`;
+  query ? `?${query}` : ""
+}`;
 
       console.log("SEARCH URL:", url);
 
@@ -340,7 +342,17 @@ function FindDonors() {
       ""
     );
   };
+const copyPhone = async () => {
+  await navigator.clipboard.writeText(
+    selectedDonor.phone
+  );
 
+  setCopied(true);
+
+  setTimeout(() => {
+    setCopied(false);
+  }, 2000);
+};
   // =========================
   // FORMAT DONOR DATA
   // =========================
@@ -795,14 +807,10 @@ function FindDonors() {
                         !donor.available
                       }
                       onClick={() => {
-                        if (
-                          donor.available
-                        ) {
-                          alert(
-                            `Contact ${donor.name}: ${donor.phone}`
-                          );
-                        }
-                      }}
+  if (donor.available) {
+    setSelectedDonor(donor);
+  }
+}}
                     >
 
                       <FaPhoneAlt />
@@ -856,7 +864,46 @@ function FindDonors() {
 
         </div>
       </section>
+{selectedDonor && (
+  <div className="contact-modal-overlay">
+    <div className="contact-modal">
+      <h3>Contact Donor</h3>
 
+      <p>
+        <strong>Name:</strong>{" "}
+        {selectedDonor.name}
+      </p>
+
+      <p>
+        <strong>Blood Group:</strong>{" "}
+        {selectedDonor.blood}
+      </p>
+
+      <p>
+        <strong>Location:</strong>{" "}
+        {selectedDonor.location}
+      </p>
+
+      <div className="phone-box">
+        {selectedDonor.phone}
+      </div>
+
+      <button onClick={copyPhone}>
+        Copy Number
+      </button>
+
+      {copied && <p>Copied!</p>}
+
+      <button
+        onClick={() =>
+          setSelectedDonor(null)
+        }
+      >
+        Close
+      </button>
+    </div>
+  </div>
+)}
     </main>
   );
 }

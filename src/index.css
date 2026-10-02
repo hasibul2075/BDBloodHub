@@ -6284,3 +6284,64 @@ body {
   color: #1f2937;
   text-decoration: none;
 }
+.contact-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.contact-modal {
+  background: #fff;
+  padding: 24px;
+  border-radius: 16px;
+  width: 90%;
+  max-width: 400px;
+}
+
+.phone-box {
+  padding: 12px;
+  margin: 12px 0;
+  border-radius: 8px;
+  background: #f5f5f5;
+  font-weight: 600;
+}
+.contact-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.55);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.contact-modal {
+  background: #fff;
+  width: 90%;
+  max-width: 400px;
+  padding: 24px;
+  border-radius: 16px;
+  text-align: center;
+}
+
+.phone-box {
+  margin: 15px 0;
+  padding: 12px;
+  background: #f5f5f5;
+  border-radius: 10px;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.contact-modal button {
+  width: 100%;
+  padding: 12px;
+  margin-top: 10px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+}
