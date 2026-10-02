@@ -193,6 +193,7 @@ app.get("/api/donors/search", async (req, res) => {
 // STATS
 // ===============================
 
+
 app.get("/api/stats", async (req, res) => {
   try {
     const { count, error } = await supabase
@@ -203,6 +204,7 @@ app.get("/api/stats", async (req, res) => {
       return res.status(500).json({
         success: false,
         message: "Failed to load stats",
+        error: error.message,
       });
     }
 
@@ -214,6 +216,7 @@ app.get("/api/stats", async (req, res) => {
     res.status(500).json({
       success: false,
       message: "Server error",
+      error: error.message,
     });
   }
 });
