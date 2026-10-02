@@ -189,7 +189,34 @@ app.get("/api/donors/search", async (req, res) => {
     });
   }
 });
+// ===============================
+// STATS
+// ===============================
 
+app.get("/api/stats", async (req, res) => {
+  try {
+    const { count, error } = await supabase
+      .from("donors")
+      .select("*", { count: "exact", head: true });
+
+    if (error) {
+      return res.status(500).json({
+        success: false,
+        message: "Failed to load stats",
+      });
+    }
+
+    res.json({
+      success: true,
+      donors: count || 0,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Server error",
+    });
+  }
+});
 // ===============================
 // START SERVER
 // ===============================
