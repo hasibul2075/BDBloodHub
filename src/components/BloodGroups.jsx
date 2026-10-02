@@ -1,5 +1,19 @@
 function BloodGroups() {
-  const groups = ["A+", "A-", "B+", "B-", "O+", "O-", "AB+", "AB-"];
+  const groups = [
+    "A+",
+    "A-",
+    "B+",
+    "B-",
+    "O+",
+    "O-",
+    "AB+",
+    "AB-",
+  ];
+
+  const handleGroupClick = (group) => {
+    window.location.href =
+      `/find-donors?blood_group=${encodeURIComponent(group)}`;
+  };
 
   return (
     <section className="blood-groups">
@@ -12,7 +26,12 @@ function BloodGroups() {
 
         <div className="group-grid">
           {groups.map((group) => (
-            <div key={group} className="group-card">
+            <div
+              key={group}
+              className="group-card"
+              onClick={() => handleGroupClick(group)}
+              style={{ cursor: "pointer" }}
+            >
               {group}
             </div>
           ))}
