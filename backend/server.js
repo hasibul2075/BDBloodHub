@@ -61,14 +61,7 @@ app.post("/api/donors", async (req, res) => {
       data: { user },
       error: userError,
     } = await userSupabase.auth.getUser();
-// Check if donor profile already exists
-
-if (userError || !user) {
-  return res.status(401).json({
-    success: false,
-    message: "Invalid or expired login session.",
-  });
-}
+ 
 
 // Check if donor profile already exists
 if (userError || !user) {
@@ -77,27 +70,35 @@ if (userError || !user) {
     message: "Invalid or expired login session.",
   });
 }
-
-// Check if donor profile already exists
-const { data: existingDonor } = await userSupabase
+const {
+  data: existingDonors,
+  error: existingDonorError,
+} = await userSupabase
   .from("donors")
   .select("id")
   .eq("user_id", user.id)
-  .maybeSingle();
+  .limit(1);
 
-if (existingDonor) {
+if (existingDonorError) {
+  console.error(
+    "EXISTING DONOR CHECK ERROR:",
+    existingDonorError
+  );
+
+  return res.status(500).json({
+    success: false,
+    message: "Failed to check existing donor profile.",
+  });
+}
+
+if (existingDonors && existingDonors.length > 0) {
   return res.status(409).json({
     success: false,
     message:
       "You already have a donor profile. Please update your profile instead.",
   });
 }
-    if (userError || !user) {
-      return res.status(401).json({
-        success: false,
-        message: "Invalid or expired login session.",
-      });
-    }
+
 
     const {
       name,
@@ -125,22 +126,18 @@ if (existingDonor) {
       });
     }
 
-    const { data, error } = await userSupabase
-      .from("donors")
-      .insert([
-        {
-          name,
-          email,
-          phone,
-          blood_group,
-          district,
-          upazila,
-          last_donation_date:
-            last_donation_date || null,
-          available: available ?? true,
-          user_id: user.id,
-        },
-      ])
+  const { data, error } = await userSupabase 
+  .from("donors") 
+  .insert([ 
+    { name,
+      email,
+      phone, 
+      blood_group, 
+      district, 
+      upazila, 
+      last_donation_date: last_donation_date || null, 
+      available: available ?? true, 
+      user_id: user.id, }, ])
       .select()
       .single();
 
