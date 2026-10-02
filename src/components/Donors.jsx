@@ -1,30 +1,24 @@
+import { useEffect, useState } from "react";
+
 function Donors() {
-  const donors = [
-    {
-      name: "Rahim Ahmed",
-      blood: "A+",
-      location: "Dhaka",
-      available: true,
-    },
-    {
-      name: "Nusrat Jahan",
-      blood: "B+",
-      location: "Chittagong",
-      available: true,
-    },
-    {
-      name: "Tanvir Hasan",
-      blood: "O+",
-      location: "Khulna",
-      available: false,
-    },
-    {
-      name: "Sadia Islam",
-      blood: "AB+",
-      location: "Rajshahi",
-      available: true,
-    },
-  ];
+
+  const [donors, setDonors] = useState([]);
+
+  useEffect(() => {
+    fetch(
+      "https://bdbloodhub-backend.onrender.com/api/donors/search"
+    )
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.success) {
+          setDonors(data.donors);
+        }
+      })
+      .catch((err) =>
+        console.error("Donor load error:", err)
+      );
+  }, []);
+
 
   return (
     <section className="donors">
@@ -38,7 +32,7 @@ function Donors() {
 
         <div className="donor-grid">
           {donors.map((donor, index) => (
-            <div className="donor-card" key={index}>
+            <div className="donor-card" key={donor.id}>
 
               <div className="donor-top">
                 <div className="donor-avatar">
@@ -47,7 +41,7 @@ function Donors() {
 
                 <div>
                   <h3>{donor.name}</h3>
-                  <p>{donor.location}</p>
+                  <p>{donor.district}</p>
                 </div>
               </div>
 
