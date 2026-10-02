@@ -12,7 +12,7 @@ function BloodGroups() {
 
   const handleGroupClick = (group) => {
     window.location.href =
-      `/find-donors?blood_group=${encodeURIComponent(group)}`;
+  `/find-donors?blood=${encodeURIComponent(group)}`;
   };
 
   return (
