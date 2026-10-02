@@ -47,7 +47,7 @@ function Donors() {
 
               <div className="donor-info">
                 <span className="blood-badge">
-                  {donor.blood}
+                  {donor.blood_group}
                 </span>
 
                 <span
