@@ -63,6 +63,22 @@ app.post("/api/donors", async (req, res) => {
     } = await userSupabase.auth.getUser();
 // Check if donor profile already exists
 
+if (userError || !user) {
+  return res.status(401).json({
+    success: false,
+    message: "Invalid or expired login session.",
+  });
+}
+
+// Check if donor profile already exists
+if (userError || !user) {
+  return res.status(401).json({
+    success: false,
+    message: "Invalid or expired login session.",
+  });
+}
+
+// Check if donor profile already exists
 const { data: existingDonor } = await userSupabase
   .from("donors")
   .select("id")
