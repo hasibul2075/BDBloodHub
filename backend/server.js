@@ -61,7 +61,21 @@ app.post("/api/donors", async (req, res) => {
       data: { user },
       error: userError,
     } = await userSupabase.auth.getUser();
+// Check if donor profile already exists
 
+const { data: existingDonor } = await userSupabase
+  .from("donors")
+  .select("id")
+  .eq("user_id", user.id)
+  .maybeSingle();
+
+if (existingDonor) {
+  return res.status(409).json({
+    success: false,
+    message:
+      "You already have a donor profile. Please update your profile instead.",
+  });
+}
     if (userError || !user) {
       return res.status(401).json({
         success: false,
