@@ -6083,10 +6083,10 @@ body {
 
   .auth-container {
     padding: 0 15px;
-    gap: 30px;
+    gap: 5px;
   }
 .auth-page .auth-info {
-  transform: translateY(0) !important;
+  transform: translateY(-40px) !important;
 }
   .auth-info h1 {
     font-size: 29px;
