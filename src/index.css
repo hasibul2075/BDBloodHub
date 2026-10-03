@@ -258,6 +258,9 @@ body {
 
 
 @media (max-width: 768px) {
+  .hero {
+    padding-bottom: 20px;
+  }
   .hero-container {
     flex-direction: column;
   }
@@ -541,7 +544,7 @@ body {
   }
 
   .how-it-works {
-    padding: 60px 0;
+    padding: 30px 0;
   }
 }
 /* CTA Section */
@@ -1767,14 +1770,20 @@ body {
 @media (max-width: 768px) {
 
   .hero {
-    padding: 45px 0 55px;
+    padding: 30px 0 15px;
     overflow: visible;
   }
 
   .hero-container {
     flex-direction: column;
     align-items: stretch;
-    gap: 35px;
+    gap: 10px;
+  }
+  .hero p{
+    margin-bottom: 12px;
+  }
+  .search-box{
+    margin-bottom: 0;
   }
 
   /* Left */
@@ -6388,4 +6397,23 @@ body {
 }
 .forgot-auth-info {
   transform: translateY(-60px) !important;
+}
+@media (max-width: 768px) {
+  .find-search-btn {
+    width: 100%;
+    height: 48px !important;
+    min-height: 48px;
+    padding: 0 18px !important;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+
+    line-height: 1;
+    font-size: 14px;
+    font-weight: 600;
+
+    margin-top: 8px;
+  }
 }
