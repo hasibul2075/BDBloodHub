@@ -5665,7 +5665,7 @@ body {
 
 .auth-info {
   max-width: 520px;
-  transform: translateY(-175px);
+  transform: translateY(-210px);
 }
 .auth-logo-icon {
   width: 58px;
@@ -6085,7 +6085,9 @@ body {
     padding: 0 15px;
     gap: 30px;
   }
-
+.auth-page .auth-info {
+  transform: translateY(0) !important;
+}
   .auth-info h1 {
     font-size: 29px;
   }
@@ -6390,7 +6392,7 @@ body {
 }
 /* Login page only */
 .login-page .auth-container {
-  transform: translateY(40px);
+  transform: translateY(60px);
 }
 .login-page .auth-info {
   transform: translateY(-90px);
@@ -6417,3 +6419,13 @@ body {
     margin-top: 8px;
   }
 }
+@media (max-width: 600px) {
+  .login-page .auth-container {
+    transform: translateY(10px);
+  }
+
+  .login-page .auth-info {
+    transform: translateY(0px);
+  }
+}
+
