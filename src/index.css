@@ -6086,7 +6086,7 @@ body {
     gap: 5px;
   }
 .auth-page .auth-info {
-  transform: translateY(-40px) !important;
+  transform: translateY(-10px) !important;
 }
   .auth-info h1 {
     font-size: 29px;
