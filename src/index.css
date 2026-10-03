@@ -18,8 +18,8 @@ body {
 
 
 .navbar {
-  background: white;
-  border-bottom: 1px solid #eee;
+  background: rgba(241, 247, 240, 0.95);
+  border-bottom: 1px solid rgba(180, 200, 180, 0.35);
 }
 
 .nav-container {
@@ -142,19 +142,30 @@ body {
 
 
 .hero {
+  position: relative;
+  min-height: 600px;
   padding: 80px 0;
+  background-image: url("/hero1.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  overflow: visible;
 }
-
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.62);
+  z-index: 0;
+}
 .hero-container {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 70px;
+  position: relative;
+  z-index: 1;
 }
 
 .hero-left {
-  flex: 0 0 48%;
-  max-width: 48%;
+  width: 100%;
+  max-width: 700px;
 }
 
 .hero-right {
@@ -215,8 +226,8 @@ body {
 
 
 .stats {
-  background: white;
-  padding: 40px 0;
+  background: whitesmoke;
+  padding: 5px 0;
 }
 
 .stats-container {
@@ -302,7 +313,7 @@ body {
 }
 
 .blood-groups {
-  padding: 80px 0;
+  padding: 20px 0;
   background: #f7f7f7;
 }
 
@@ -358,7 +369,7 @@ body {
 /* Donors Section */
 
 .donors {
-  padding: 80px 0;
+  padding: 40px 0;
   background: white;
 }
 
@@ -474,7 +485,7 @@ body {
 /* How It Works */
 
 .how-it-works {
-  padding: 90px 0;
+  padding: 40px 0;
   background: #f7f7f7;
 }
 
@@ -536,7 +547,7 @@ body {
 /* CTA Section */
 
 .cta-section {
-  padding: 90px 0;
+  padding: 40px 0;
   background: #fff1f2;
 }
 
@@ -636,7 +647,7 @@ body {
 .footer {
   background: #111827;
   color: white;
-  padding-top: 70px;
+  padding-top: 50px;
 }
 
 .footer-container {
@@ -2697,14 +2708,14 @@ body {
 
 .find-donors-page {
   min-height: 100vh;
-  background: #f8fafc;
+  background: whitesmoke;
 }
 
 /* Header */
 
 .find-donors-header {
-  padding: 70px 0 55px;
-  background: #ffffff;
+  padding: 50px 0 55px;
+  background: whitesmoke;
   text-align: center;
 }
 
@@ -2727,6 +2738,7 @@ body {
 
 .find-donors-search {
   padding: 30px 0;
+  color: whitesmoke;
 }
 
 .donor-filter-box {
@@ -2832,7 +2844,8 @@ body {
 /* Results */
 
 .donor-results {
-  padding: 30px 0 80px;
+  padding: 15px 0 80px;
+  color: whitesmoke;
 }
 
 .results-heading {
@@ -4067,7 +4080,7 @@ body {
    ========================================= */
 
 .become-donor-header {
-  padding: 64px 0 44px;
+  padding: 40px 0 44px;
   background: #ffffff;
   text-align: center;
   border-bottom: 1px solid #f1f5f9;
@@ -4101,7 +4114,7 @@ body {
    ========================================= */
 
 .donor-registration {
-  padding: 48px 0 72px;
+  padding: 20px 0 72px;
 }
 
 .donor-form-wrapper {
@@ -4978,7 +4991,7 @@ body {
    ========================================= */
 
 .about-main {
-  padding: 72px 0;
+  padding: 50px 0;
   background: #ffffff;
 }
 
@@ -5072,7 +5085,7 @@ body {
    ========================================= */
 
 .mission-section {
-  padding: 72px 0;
+  padding: 30px 0;
   background: #f8fafc;
 }
 
@@ -5173,7 +5186,7 @@ body {
    ========================================= */
 
 .why-about-section {
-  padding: 72px 0;
+  padding: 30px 0;
   background: #ffffff;
 }
 
@@ -5248,7 +5261,7 @@ body {
    ========================================= */
 
 .about-cta {
-  padding: 70px 0;
+  padding: 30px 0;
   background: #f8fafc;
 }
 
@@ -5616,9 +5629,9 @@ body {
 
 .auth-section {
   min-height: calc(100vh - 80px);
-  padding: 70px 0;
+  padding: 55px 0 70px;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   box-sizing: border-box;
 }
 
@@ -5643,8 +5656,8 @@ body {
 
 .auth-info {
   max-width: 520px;
+  transform: translateY(-175px);
 }
-
 .auth-logo-icon {
   width: 58px;
   height: 58px;
@@ -6365,4 +6378,14 @@ body {
 .show-more-btn:hover {
   opacity: 0.9;
   transform: translateY(-2px);
+}
+/* Login page only */
+.login-page .auth-container {
+  transform: translateY(40px);
+}
+.login-page .auth-info {
+  transform: translateY(-90px);
+}
+.forgot-auth-info {
+  transform: translateY(-60px) !important;
 }

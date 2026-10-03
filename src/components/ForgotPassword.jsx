@@ -65,7 +65,7 @@ function ForgotPassword() {
         <div className="auth-container">
 
           {/* LEFT SIDE */}
-          <div className="auth-info">
+          <div className="auth-info forgot-auth-info">
             <div className="auth-logo-icon">
               <FaTint />
             </div>

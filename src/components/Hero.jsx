@@ -343,18 +343,7 @@ const filteredDistricts =
         </div>
 
         {/* RIGHT SIDE */}
-        <div className="hero-right">
-
-          <div className="hero-image">
-
-            <img
-              src="/hero.jpg"
-              alt="Blood Donation"
-            />
-
-          </div>
-
-        </div>
+       
 
       </div>
     </section>
