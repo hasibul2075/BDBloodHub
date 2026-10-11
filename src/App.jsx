@@ -7,19 +7,46 @@ import Donors from "./components/Donors";
 import HowItWorks from "./components/HowItWorks";
 import CTA from "./components/CTA";
 import Footer from "./components/Footer";
-
 import FindDonors from "./components/FindDonors";
 import BecomeDonor from "./components/BecomeDonor";
 import AboutUs from "./components/AboutUs";
-
 import Login from "./components/Login";
 import Register from "./components/Register";
 import ForgotPassword from "./components/ForgotPassword";
 import ResetPassword from "./components/ResetPassword";
 import MyDonorProfile from "./components/MyDonorProfile";
 import AdminPanel from "./components/AdminPanel";
-
+import BloodRequests from "./components/BloodRequests";
+import RequestBlood from "./components/RequestBlood";
+import AdminRequests from "./components/AdminRequests";
 function App() {
+    if (window.location.pathname === "/admin/requests") {
+    return <AdminRequests />;
+  }
+    if (window.location.pathname === "/request-blood") {
+    return (
+      <>
+        <Navbar />
+
+        <div className="page-transition">
+          <RequestBlood />
+          <Footer />
+        </div>
+      </>
+    );
+  }
+    if (window.location.pathname === "/blood-requests") {
+    return (
+      <>
+        <Navbar />
+
+        <div className="page-transition">
+          <BloodRequests />
+          <Footer />
+        </div>
+      </>
+    );
+  }
     if (window.location.pathname === "/admin") {
     return <AdminPanel />;
   }

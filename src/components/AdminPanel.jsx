@@ -389,7 +389,12 @@ function AdminPanel() {
           <a href="/" className="adm-brand">
             <FaTint /> BDBloodHub <span>Admin</span>
           </a>
-
+          <nav className="adm-nav">
+            <a href="/admin" className="active">
+              Donors
+            </a>
+            <a href="/admin/requests">Requests</a>
+          </nav>
           <button
             type="button"
             className="adm-btn"

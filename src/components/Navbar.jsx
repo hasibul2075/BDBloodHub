@@ -107,7 +107,18 @@ function Navbar() {
               Become a Donor
             </a>
           </li>
-
+          <li>
+            <a
+              href="/blood-requests"
+              className={
+                isActive("/blood-requests")
+                  ? "active"
+                  : ""
+              }
+            >
+              Blood Requests
+            </a>
+          </li>
           <li>
             <a
               href="/about"
@@ -226,7 +237,19 @@ function Navbar() {
         >
           Become a Donor
         </a>
-
+        <a
+          href="/blood-requests"
+          className={
+            isActive("/blood-requests")
+              ? "active"
+              : ""
+          }
+          onClick={() =>
+            setMenuOpen(false)
+          }
+        >
+          Blood Requests
+        </a>
         <a
           href="/about"
           className={
