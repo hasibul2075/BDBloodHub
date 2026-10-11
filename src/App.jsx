@@ -17,8 +17,12 @@ import Register from "./components/Register";
 import ForgotPassword from "./components/ForgotPassword";
 import ResetPassword from "./components/ResetPassword";
 import MyDonorProfile from "./components/MyDonorProfile";
+import AdminPanel from "./components/AdminPanel";
 
 function App() {
+    if (window.location.pathname === "/admin") {
+    return <AdminPanel />;
+  }
   if (window.location.pathname === "/my-profile") {
   return (
     <>
