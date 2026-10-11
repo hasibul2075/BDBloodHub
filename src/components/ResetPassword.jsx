@@ -119,7 +119,7 @@ function ResetPassword() {
   }
 
   return (
-    <main className="auth-page">
+        <main className="auth-page reset-page">
       <section className="auth-section">
         <div className="auth-container">
 
