@@ -922,3 +922,30 @@
 .req-focus-bar a:hover {
   text-decoration: underline;
 }
+/* ---------- contact popup: "Call Now" (phones only) ---------- */
+.req-modal-call {
+  display: none;
+  margin-top: 10px;
+  padding: 12px;
+  border-radius: 10px;
+  background: #ef4444;
+  color: #fff;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+@media (hover: none) and (pointer: coarse) {
+  .req-modal-call {
+    display: block;
+  }
+}
+
+/* ---------- tighter share row so it fits on one line ---------- */
+.req-share {
+  gap: 6px;
+}
+
+.req-share-btn {
+  padding: 7px 10px;
+  font-size: 12.5px;
+}

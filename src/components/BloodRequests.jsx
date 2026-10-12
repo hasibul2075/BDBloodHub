@@ -54,6 +54,20 @@ function BloodRequests() {
   const [isBloodOpen, setIsBloodOpen] = useState(false);
   const dropRef = useRef(null);
 
+  // Contact popup (same style as "Contact Donor" on Find Donors)
+  const [contactRequest, setContactRequest] = useState(null);
+  const [copied, setCopied] = useState(false);
+
+  const copyPhone = async () => {
+    try {
+      await navigator.clipboard.writeText(contactRequest.contact_phone);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch {
+      window.prompt("Copy this number:", contactRequest.contact_phone);
+    }
+  };
+
   // Close the blood group dropdown when clicking outside of it
   useEffect(() => {
     const handleOutside = (e) => {
@@ -297,18 +311,74 @@ function BloodRequests() {
                 <ShareRequest request={r} />
 
                 <div className="req-call">
-                  <a
-                    href={`tel:${r.contact_phone}`}
+                  <button
+                    type="button"
                     className="req-btn"
+                    onClick={() => {
+                      setCopied(false);
+                      setContactRequest(r);
+                    }}
                   >
                     <FaPhoneAlt /> Call {r.contact_phone}
-                  </a>
+                  </button>
                 </div>
               </article>
             ))}
           </div>
         )}
       </div>
+
+      {contactRequest && (
+        <div
+          className="contact-modal-overlay"
+          onClick={() => setContactRequest(null)}
+        >
+          <div
+            className="contact-modal"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <h3>Contact for this Request</h3>
+
+            <p>
+              <strong>Patient:</strong> {contactRequest.patient_name}
+            </p>
+
+            <p>
+              <strong>Blood Group:</strong> {contactRequest.blood_group}
+            </p>
+
+            <p>
+              <strong>Hospital:</strong> {contactRequest.hospital},{" "}
+              {contactRequest.district}
+            </p>
+
+            <p>
+              <strong>Contact Person:</strong>{" "}
+              {contactRequest.contact_name}
+            </p>
+
+            <div className="phone-box">{contactRequest.contact_phone}</div>
+
+            {/* Shown on phones only (opens the dialer) */}
+            <a
+              href={`tel:${contactRequest.contact_phone}`}
+              className="req-modal-call"
+            >
+              Call Now
+            </a>
+
+            <button type="button" onClick={copyPhone}>
+              Copy Number
+            </button>
+
+            {copied && <p>Copied!</p>}
+
+            <button type="button" onClick={() => setContactRequest(null)}>
+              Close
+            </button>
+          </div>
+        </div>
+      )}
     </main>
   );
 }
