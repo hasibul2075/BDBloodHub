@@ -120,9 +120,14 @@ function BloodRequests() {
             </p>
           </div>
 
-          <a href="/request-blood" className="req-btn">
-            <FaPlus /> Request Blood
-          </a>
+                    <div className="req-head-actions">
+            <a href="/my-requests" className="req-btn req-btn-light">
+              My Requests
+            </a>
+            <a href="/request-blood" className="req-btn">
+              <FaPlus /> Request Blood
+            </a>
+          </div>
         </div>
 
         <div className="req-filters">

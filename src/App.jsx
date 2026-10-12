@@ -19,7 +19,20 @@ import AdminPanel from "./components/AdminPanel";
 import BloodRequests from "./components/BloodRequests";
 import RequestBlood from "./components/RequestBlood";
 import AdminRequests from "./components/AdminRequests";
+import MyRequests from "./components/MyRequests";
 function App() {
+    if (window.location.pathname === "/my-requests") {
+    return (
+      <>
+        <Navbar />
+
+        <div className="page-transition">
+          <MyRequests />
+          <Footer />
+        </div>
+      </>
+    );
+  }
     if (window.location.pathname === "/admin/requests") {
     return <AdminRequests />;
   }
