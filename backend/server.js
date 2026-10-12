@@ -174,10 +174,22 @@ app.get("/api/donors/search", async (req, res) => {
   try {
     const { blood_group, district, upazila } = req.query;
 
+        // Donors rest after giving blood (change 120 to 90 for 3 months)
+    const REST_DAYS = 120;
+
+    const restCutoff = new Date(
+      Date.now() - REST_DAYS * 24 * 60 * 60 * 1000
+    )
+      .toISOString()
+      .slice(0, 10);
+
     let query = supabase
       .from("donors")
       .select("*")
-      .eq("available", true);
+      .eq("available", true)
+      .or(
+        `last_donation_date.is.null,last_donation_date.lte.${restCutoff}`
+      );
 
     if (blood_group) {
       query = query.eq("blood_group", blood_group);

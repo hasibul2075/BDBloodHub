@@ -12,15 +12,26 @@ import {
   FaEdit,
   FaSave,
   FaTimes,
+  FaMedal,
+  FaHourglassHalf,
 } from "react-icons/fa";
 
 import { supabase } from "../supabase";
+import {
+  getRestInfo,
+  getBadge,
+  todayISO,
+  REST_DAYS,
+} from "../utils/donorEligibility";
+import "../donor.css";
 
 function MyDonorProfile() {
   const [donor, setDonor] = useState(null);
 
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
+  const [markingDonation, setMarkingDonation] = useState(false);
+  const [showDonateConfirm, setShowDonateConfirm] = useState(false);
 
   const [editing, setEditing] = useState(false);
 
@@ -225,6 +236,50 @@ function MyDonorProfile() {
     }
   };
 
+  const handleDonatedToday = async () => {
+    // Close the popup first and block double clicks / repeat donations
+    setShowDonateConfirm(false);
+
+    if (markingDonation || getRestInfo(donor.last_donation_date).resting) {
+      return;
+    }
+
+    setError("");
+    setSuccess("");
+    setMarkingDonation(true);
+
+    const { data, error: donationError } = await supabase
+      .from("donors")
+      .update({
+        last_donation_date: todayISO(),
+        donation_count: (donor.donation_count || 0) + 1,
+      })
+      .eq("id", donor.id)
+      .select()
+      .single();
+
+    setMarkingDonation(false);
+
+    if (donationError) {
+      setError(
+        donationError.message ||
+          "Could not record your donation. Please try again."
+      );
+      return;
+    }
+
+    setDonor(data);
+
+    setFormData((prev) => ({
+      ...prev,
+      last_donation_date: data.last_donation_date || "",
+    }));
+
+    setSuccess(
+      "Thank you for donating blood! Your donation has been recorded."
+    );
+  };
+
   if (loading) {
     return (
       <main className="auth-page">
@@ -288,7 +343,7 @@ function MyDonorProfile() {
 
   if (!donor) {
     return (
-        <main className="auth-page profile-empty-page">
+      <main className="auth-page">
         <section className="auth-section">
           <div className="auth-container">
             <div className="auth-info">
@@ -342,6 +397,9 @@ function MyDonorProfile() {
     );
   }
 
+  const rest = getRestInfo(donor.last_donation_date);
+  const badge = getBadge(donor.donation_count);
+
   const formattedDate = donor.last_donation_date
     ? new Date(
         donor.last_donation_date
@@ -349,7 +407,7 @@ function MyDonorProfile() {
     : "Not provided";
 
   return (
-        <main className="auth-page profile-empty-page">
+    <main className="auth-page">
       <section className="auth-section">
         <div className="auth-container">
 
@@ -381,7 +439,7 @@ function MyDonorProfile() {
                 fontWeight: "600",
               }}
             >
-              {donor.available ? (
+              {donor.available && !rest.resting ? (
                 <>
                   <FaCheckCircle
                     style={{
@@ -397,9 +455,50 @@ function MyDonorProfile() {
                       color: "#dc2626",
                     }}
                   />
-                  Currently unavailable
+                  {donor.available
+                    ? "Resting after your last donation"
+                    : "Currently unavailable"}
                 </>
               )}
+            </div>
+
+            <div className="donor-extra">
+              <div className="donor-badge-row">
+                <FaMedal />
+                <strong>{badge.label}</strong>
+                <span>
+                  · {donor.donation_count || 0} donation
+                  {(donor.donation_count || 0) === 1 ? "" : "s"}
+                </span>
+              </div>
+
+              {rest.resting && (
+                <p className="donor-rest-note">
+                  <FaHourglassHalf />
+                  <span>
+                    Resting period: you can donate again on{" "}
+                    {rest.until.toLocaleDateString("en-GB")} (
+                    {rest.daysLeft} day{rest.daysLeft === 1 ? "" : "s"}{" "}
+                    left). You will not appear in donor search until then.
+                  </span>
+                </p>
+              )}
+
+              <button
+                type="button"
+                className="donor-donated-btn"
+                onClick={() => setShowDonateConfirm(true)}
+                disabled={markingDonation || rest.resting}
+                title={
+                  rest.resting
+                    ? "You are in the resting period after your last donation"
+                    : ""
+                }
+              >
+                {markingDonation
+                  ? "Saving..."
+                  : "I donated blood today"}
+              </button>
             </div>
           </div>
 
@@ -825,6 +924,49 @@ function MyDonorProfile() {
           </div>
         </div>
       </section>
+
+      {showDonateConfirm && !rest.resting && (
+        <div
+          className="donor-modal-overlay"
+          onClick={() => setShowDonateConfirm(false)}
+        >
+          <div
+            className="donor-modal"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="donor-modal-icon">
+              <FaTint />
+            </div>
+
+            <h3>Record your blood donation?</h3>
+
+            <p>
+              Today&apos;s date will be saved as your latest blood donation.
+              You will be hidden from donor search for the next{" "}
+              {Math.round(REST_DAYS / 30)} months while you rest.
+            </p>
+
+            <div className="donor-modal-actions">
+              <button
+                type="button"
+                className="donor-modal-cancel"
+                onClick={() => setShowDonateConfirm(false)}
+              >
+                Cancel
+              </button>
+
+              <button
+                type="button"
+                className="donor-modal-confirm"
+                onClick={handleDonatedToday}
+                disabled={markingDonation}
+              >
+                Yes, I donated
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </main>
   );
 }
