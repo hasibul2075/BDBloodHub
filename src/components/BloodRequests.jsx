@@ -14,6 +14,7 @@ import {
 } from "react-icons/fa";
 
 import { supabase } from "../supabase";
+import ShareRequest from "./ShareRequest";
 import "../requests.css";
 
 const BLOOD_GROUPS = ["A+", "A-", "B+", "B-", "O+", "O-", "AB+", "AB-"];
@@ -44,6 +45,11 @@ function BloodRequests() {
 
   const [bloodFilter, setBloodFilter] = useState("");
   const [search, setSearch] = useState("");
+
+  // A shared link looks like /blood-requests?request=<id>
+  const [focusId] = useState(() =>
+    new URLSearchParams(window.location.search).get("request")
+  );
 
   const [isBloodOpen, setIsBloodOpen] = useState(false);
   const dropRef = useRef(null);
@@ -90,6 +96,10 @@ function BloodRequests() {
   }, []);
 
   const visible = useMemo(() => {
+    if (focusId) {
+      return requests.filter((r) => r.id === focusId);
+    }
+
     const q = search.trim().toLowerCase();
 
     return requests
@@ -103,7 +113,7 @@ function BloodRequests() {
           .some((v) => v.toLowerCase().includes(q));
       })
       .sort((a, b) => Number(b.urgent) - Number(a.urgent));
-  }, [requests, bloodFilter, search]);
+  }, [requests, bloodFilter, search, focusId]);
 
   return (
     <main className="req-page">
@@ -120,7 +130,7 @@ function BloodRequests() {
             </p>
           </div>
 
-                    <div className="req-head-actions">
+          <div className="req-head-actions">
             <a href="/my-requests" className="req-btn req-btn-light">
               My Requests
             </a>
@@ -130,86 +140,93 @@ function BloodRequests() {
           </div>
         </div>
 
-        <div className="req-filters">
-          <input
-            type="text"
-            placeholder="Search by district, hospital or patient..."
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-          />
+        {focusId ? (
+          <div className="req-focus-bar">
+            <span>Showing one shared request.</span>
+            <a href="/blood-requests">View all requests</a>
+          </div>
+        ) : (
+          <div className="req-filters">
+            <input
+              type="text"
+              placeholder="Search by district, hospital or patient..."
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+            />
 
-          <div className="req-drop" ref={dropRef}>
-            <button
-              type="button"
-              className={`req-drop-btn ${isBloodOpen ? "active" : ""}`}
-              onClick={() => setIsBloodOpen(!isBloodOpen)}
-            >
-              <span className="req-drop-left">
-                <span className="req-drop-icon">
-                  <FaTint />
-                </span>
-
-                <span>
-                  Blood Group:{" "}
-                  <strong>{bloodFilter === "" ? "All" : bloodFilter}</strong>
-                </span>
-              </span>
-
-              <FaChevronDown
-                className={`req-drop-chevron ${
-                  isBloodOpen ? "rotate" : ""
-                }`}
-              />
-            </button>
-
-            {isBloodOpen && (
-              <div className="req-drop-menu">
-                <button
-                  type="button"
-                  className={`req-drop-option ${
-                    bloodFilter === "" ? "selected" : ""
-                  }`}
-                  onClick={() => {
-                    setBloodFilter("");
-                    setIsBloodOpen(false);
-                  }}
-                >
-                  <span className="req-drop-small-icon">
+            <div className="req-drop" ref={dropRef}>
+              <button
+                type="button"
+                className={`req-drop-btn ${isBloodOpen ? "active" : ""}`}
+                onClick={() => setIsBloodOpen(!isBloodOpen)}
+              >
+                <span className="req-drop-left">
+                  <span className="req-drop-icon">
                     <FaTint />
                   </span>
 
-                  <span className="req-drop-name">Blood Group: All</span>
+                  <span>
+                    Blood Group:{" "}
+                    <strong>{bloodFilter === "" ? "All" : bloodFilter}</strong>
+                  </span>
+                </span>
 
-                  {bloodFilter === "" && (
-                    <FaCheck className="req-drop-check" />
-                  )}
-                </button>
+                <FaChevronDown
+                  className={`req-drop-chevron ${
+                    isBloodOpen ? "rotate" : ""
+                  }`}
+                />
+              </button>
 
-                {BLOOD_GROUPS.map((g) => (
+              {isBloodOpen && (
+                <div className="req-drop-menu">
                   <button
                     type="button"
-                    key={g}
                     className={`req-drop-option ${
-                      bloodFilter === g ? "selected" : ""
+                      bloodFilter === "" ? "selected" : ""
                     }`}
                     onClick={() => {
-                      setBloodFilter(g);
+                      setBloodFilter("");
                       setIsBloodOpen(false);
                     }}
                   >
-                    <span className="req-drop-badge">{g}</span>
+                    <span className="req-drop-small-icon">
+                      <FaTint />
+                    </span>
 
-                    <span className="req-drop-name">{g}</span>
+                    <span className="req-drop-name">Blood Group: All</span>
 
-                    {bloodFilter === g && (
+                    {bloodFilter === "" && (
                       <FaCheck className="req-drop-check" />
                     )}
                   </button>
-                ))}
-              </div>
-            )}
+
+                  {BLOOD_GROUPS.map((g) => (
+                    <button
+                      type="button"
+                      key={g}
+                      className={`req-drop-option ${
+                        bloodFilter === g ? "selected" : ""
+                      }`}
+                      onClick={() => {
+                        setBloodFilter(g);
+                        setIsBloodOpen(false);
+                      }}
+                    >
+                      <span className="req-drop-badge">{g}</span>
+
+                      <span className="req-drop-name">{g}</span>
+
+                      {bloodFilter === g && (
+                        <FaCheck className="req-drop-check" />
+                      )}
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
           </div>
-        </div>
+        )}
 
         {error && <div className="req-alert req-alert-err">{error}</div>}
 
@@ -217,10 +234,20 @@ function BloodRequests() {
           <div className="req-empty">Loading requests...</div>
         ) : visible.length === 0 ? (
           <div className="req-empty">
-            <p>No active blood requests right now.</p>
-            <a href="/request-blood" className="req-btn req-btn-light">
-              Need blood? Post a request
-            </a>
+            <p>
+              {focusId
+                ? "This request is no longer active."
+                : "No active blood requests right now."}
+            </p>
+            {focusId ? (
+              <a href="/blood-requests" className="req-btn req-btn-light">
+                View all requests
+              </a>
+            ) : (
+              <a href="/request-blood" className="req-btn req-btn-light">
+                Need blood? Post a request
+              </a>
+            )}
           </div>
         ) : (
           <div className="req-grid">
@@ -266,6 +293,8 @@ function BloodRequests() {
                 </div>
 
                 {r.details && <p className="req-details">{r.details}</p>}
+
+                <ShareRequest request={r} />
 
                 <div className="req-call">
                   <a

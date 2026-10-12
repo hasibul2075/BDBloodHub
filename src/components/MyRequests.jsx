@@ -13,6 +13,7 @@ import {
 } from "react-icons/fa";
 
 import { supabase } from "../supabase";
+import ShareRequest from "./ShareRequest";
 import "../requests.css";
 
 const STATUS = {
@@ -320,7 +321,9 @@ function MyRequests() {
                   <span className="req-mine-meta">
                     Submitted on {formatPosted(r.created_at)}
                   </span>
-
+                                    {r.status === "approved" && !expired && (
+                    <ShareRequest request={r} />
+                  )}
                   {confirmId === r.id ? (
                     <div className="req-confirm">
                       <p>Cancel this request? This cannot be undone.</p>
