@@ -6438,3 +6438,38 @@ body {
   align-self: start;
   transform: none;
 }
+/* ===== Home hero on phones: fix empty gap + show the full map ===== */
+@media (max-width: 768px) {
+  .hero {
+    min-height: 0;
+    padding-bottom: 290px; /* room for the map picture */
+    background-position: left center;
+  }
+
+  .hero-container {
+    z-index: 2;
+  }
+
+  .hero::after {
+    content: "";
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    max-width: 700px;
+    height: 280px;
+    z-index: 1;
+    pointer-events: none;
+    background:
+      linear-gradient(rgba(255, 255, 255, 0.62), rgba(255, 255, 255, 0.62)),
+      url("/hero1.jpg") right top / auto 330px no-repeat;
+    -webkit-mask-image:
+      linear-gradient(to bottom, transparent, #000 19px),
+      linear-gradient(to right, transparent, #000 40px);
+    -webkit-mask-composite: source-in;
+    mask-image:
+      linear-gradient(to bottom, transparent, #000 19px),
+      linear-gradient(to right, transparent, #000 40px);
+    mask-composite: intersect;
+  }
+}
