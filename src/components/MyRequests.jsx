@@ -13,29 +13,30 @@ import {
 } from "react-icons/fa";
 
 import { supabase } from "../supabase";
+import { t, DATE_LOCALE } from "../i18n";
 import ShareRequest from "./ShareRequest";
 import "../requests.css";
 
 const STATUS = {
   pending: {
-    label: "Pending review",
+    label: t("mr_status_pending"),
     Icon: FaClock,
-    hint: "Our team is verifying your request. It will appear on the Blood Requests page after approval.",
+    hint: t("mr_hint_pending"),
   },
   approved: {
-    label: "Live",
+    label: t("mr_status_approved"),
     Icon: FaEye,
-    hint: "Your request is visible on the Blood Requests page. Mark it as fulfilled once you get the blood.",
+    hint: t("mr_hint_approved"),
   },
   fulfilled: {
-    label: "Fulfilled",
+    label: t("mr_status_fulfilled"),
     Icon: FaCheckCircle,
-    hint: "Marked as fulfilled. It is no longer shown publicly.",
+    hint: t("mr_hint_fulfilled"),
   },
   rejected: {
-    label: "Rejected",
+    label: t("mr_status_rejected"),
     Icon: FaTimesCircle,
-    hint: "This request was not approved. You can submit a new request with correct details.",
+    hint: t("mr_hint_rejected"),
   },
 };
 
@@ -48,7 +49,7 @@ function todayISO() {
 }
 
 function formatDay(iso) {
-  return new Date(`${iso}T00:00:00`).toLocaleDateString("en-GB", {
+  return new Date(`${iso}T00:00:00`).toLocaleDateString(DATE_LOCALE, {
     day: "numeric",
     month: "short",
     year: "numeric",
@@ -56,7 +57,7 @@ function formatDay(iso) {
 }
 
 function formatPosted(iso) {
-  return new Date(iso).toLocaleDateString("en-GB", {
+  return new Date(iso).toLocaleDateString(DATE_LOCALE, {
     day: "numeric",
     month: "short",
     year: "numeric",
@@ -125,7 +126,7 @@ function MyRequests() {
         if (!active) return;
 
         if (loadError) {
-          setError("Could not load your requests. Please try again later.");
+          setError(t("mr_err_load"));
         } else {
           setError("");
           setRequests(data || []);
@@ -157,12 +158,12 @@ function MyRequests() {
     setBusyId(null);
 
     if (updateError || !data || data.length === 0) {
-      setError("Could not update this request. Please try again.");
+      setError(t("mr_err_update"));
       return;
     }
 
     setError("");
-    showNotice("Marked as fulfilled. Thank you for updating!");
+    showNotice(t("mr_ok_fulfilled"));
     reload();
   };
 
@@ -179,12 +180,12 @@ function MyRequests() {
     setConfirmId(null);
 
     if (deleteError || !data || data.length === 0) {
-      setError("Could not cancel this request. Please try again.");
+      setError(t("mr_err_cancel"));
       return;
     }
 
     setError("");
-    showNotice("Request cancelled.");
+    showNotice(t("mr_ok_cancelled"));
     reload();
   };
 
@@ -193,7 +194,7 @@ function MyRequests() {
     return (
       <main className="req-page">
         <div className="req-wrap">
-          <div className="req-empty">Please wait...</div>
+          <div className="req-empty">{t("req_wait")}</div>
         </div>
       </main>
     );
@@ -205,19 +206,17 @@ function MyRequests() {
         <div className="req-wrap">
           <div className="req-form-card">
             <h1>
-              Login to see <span>My Requests</span>
+              {t("mr_login_pre")} <span>{t("mr_login_span")}</span>{" "}
+              {t("mr_login_post")}
             </h1>
-            <p className="req-form-sub">
-              Please login to view the blood requests you have submitted
-              and check their status.
-            </p>
+            <p className="req-form-sub">{t("mr_login_sub")}</p>
 
             <div className="req-success-actions">
               <a href="/login" className="req-btn">
-                Login
+                {t("nav_login")}
               </a>
               <a href="/register" className="req-btn req-btn-light">
-                Create account
+                {t("req_create_account")}
               </a>
             </div>
           </div>
@@ -234,22 +233,20 @@ function MyRequests() {
       <div className="req-wrap">
         <div className="req-head">
           <div>
-            <span className="req-tag">MY REQUESTS</span>
+            <span className="req-tag">{t("req_my_requests")}</span>
             <h1>
-              Your <span>Blood</span> Requests
+              {t("mr_title_1")} <span>{t("mr_title_2")}</span>{" "}
+              {t("mr_title_3")}
             </h1>
-            <p>
-              Track the requests you have submitted and see whether they
-              are approved.
-            </p>
+            <p>{t("mr_subtitle")}</p>
           </div>
 
           <div className="req-head-actions">
             <a href="/blood-requests" className="req-btn req-btn-light">
-              All Requests
+              {t("req_all_requests")}
             </a>
             <a href="/request-blood" className="req-btn">
-              <FaPlus /> Request Blood
+              <FaPlus /> {t("req_request_blood")}
             </a>
           </div>
         </div>
@@ -258,12 +255,12 @@ function MyRequests() {
         {error && <div className="req-alert req-alert-err">{error}</div>}
 
         {loading ? (
-          <div className="req-empty">Loading your requests...</div>
+          <div className="req-empty">{t("mr_loading")}</div>
         ) : requests.length === 0 ? (
           <div className="req-empty">
-            <p>You have not submitted any blood requests yet.</p>
+            <p>{t("mr_empty")}</p>
             <a href="/request-blood" className="req-btn">
-              <FaPlus /> Request Blood
+              <FaPlus /> {t("req_request_blood")}
             </a>
           </div>
         ) : (
@@ -282,7 +279,12 @@ function MyRequests() {
                     <div className="req-card-title">
                       <strong>{r.patient_name}</strong>
                       <span>
-                        {r.units} bag{r.units > 1 ? "s" : ""} needed
+                        {t(
+                          r.units > 1
+                            ? "req_bag_needed_many"
+                            : "req_bag_needed_one",
+                          { n: r.units }
+                        )}
                       </span>
                     </div>
 
@@ -302,7 +304,11 @@ function MyRequests() {
                     </div>
                     <div>
                       <FaCalendarAlt />
-                      <span>Needed: {formatDay(r.needed_date)}</span>
+                      <span>
+                        {t("req_needed_on", {
+                          date: formatDay(r.needed_date),
+                        })}
+                      </span>
                     </div>
                     <div>
                       <FaPhoneAlt />
@@ -314,19 +320,19 @@ function MyRequests() {
 
                   <p className="req-mine-hint">
                     {expired
-                      ? "The required date has passed, so this request is no longer shown publicly."
+                      ? t("mr_expired")
                       : cfg.hint}
                   </p>
 
                   <span className="req-mine-meta">
-                    Submitted on {formatPosted(r.created_at)}
+                    {t("mr_submitted_on", { date: formatPosted(r.created_at) })}
                   </span>
                                     {r.status === "approved" && !expired && (
                     <ShareRequest request={r} />
                   )}
                   {confirmId === r.id ? (
                     <div className="req-confirm">
-                      <p>Cancel this request? This cannot be undone.</p>
+                      <p>{t("mr_cancel_confirm")}</p>
 
                       <div className="req-mine-actions">
                         <button
@@ -335,7 +341,7 @@ function MyRequests() {
                           disabled={busyId === r.id}
                           onClick={() => setConfirmId(null)}
                         >
-                          Keep it
+                          {t("mr_keep")}
                         </button>
                         <button
                           type="button"
@@ -343,7 +349,9 @@ function MyRequests() {
                           disabled={busyId === r.id}
                           onClick={() => cancelRequest(r)}
                         >
-                          {busyId === r.id ? "Cancelling..." : "Yes, cancel"}
+                          {busyId === r.id
+                            ? t("mr_cancelling")
+                            : t("mr_yes_cancel")}
                         </button>
                       </div>
                     </div>
@@ -357,8 +365,8 @@ function MyRequests() {
                           onClick={() => markFulfilled(r)}
                         >
                           {busyId === r.id
-                            ? "Updating..."
-                            : "Mark as fulfilled"}
+                            ? t("mr_updating")
+                            : t("mr_mark_fulfilled")}
                         </button>
                       )}
 
@@ -368,7 +376,7 @@ function MyRequests() {
                           className="req-btn req-btn-light"
                           onClick={() => setConfirmId(r.id)}
                         >
-                          Cancel request
+                          {t("mr_cancel_request")}
                         </button>
                       )}
                     </div>

@@ -9,6 +9,7 @@ import {
 } from "react-icons/fa";
 
 import { supabase } from "../supabase";
+import { t } from "../i18n";
 import "../requests.css";
 
 const BLOOD_GROUPS = ["A+", "A-", "B+", "B-", "O+", "O-", "AB+", "AB-"];
@@ -149,24 +150,22 @@ function RequestBlood() {
       !payload.needed_date ||
       payload.contact_name.length < 2
     ) {
-      setError("Please fill in all required fields.");
+      setError(t("rb_err_required"));
       return;
     }
 
     if (!Number.isInteger(units) || units < 1 || units > 10) {
-      setError("Bags of blood must be between 1 and 10.");
+      setError(t("rb_err_units"));
       return;
     }
 
     if (payload.needed_date < todayISO()) {
-      setError("The required date cannot be in the past.");
+      setError(t("rb_err_past"));
       return;
     }
 
     if (!PHONE_REGEX.test(phone)) {
-      setError(
-        "Please enter a valid Bangladeshi mobile number (e.g. 017XXXXXXXX)."
-      );
+      setError(t("rb_err_phone"));
       return;
     }
 
@@ -182,7 +181,7 @@ function RequestBlood() {
     if (insertError) {
       setError(
         insertError.message ||
-          "Could not submit your request. Please try again."
+          t("rb_err_submit")
       );
       return;
     }
@@ -195,7 +194,7 @@ function RequestBlood() {
     return (
       <main className="req-page">
         <div className="req-wrap">
-          <div className="req-empty">Please wait...</div>
+          <div className="req-empty">{t("req_wait")}</div>
         </div>
       </main>
     );
@@ -207,19 +206,17 @@ function RequestBlood() {
         <div className="req-wrap">
           <div className="req-form-card">
             <h1>
-              Login to <span>Request Blood</span>
+              {t("rb_login_pre")} <span>{t("rb_login_span")}</span>{" "}
+              {t("rb_login_post")}
             </h1>
-            <p className="req-form-sub">
-              To keep requests genuine and stop spam, you need to be
-              logged in before posting a blood request.
-            </p>
+            <p className="req-form-sub">{t("rb_login_sub")}</p>
 
             <div className="req-success-actions">
               <a href="/login" className="req-btn">
-                Login
+                {t("nav_login")}
               </a>
               <a href="/register" className="req-btn req-btn-light">
-                Create account
+                {t("req_create_account")}
               </a>
             </div>
           </div>
@@ -235,22 +232,19 @@ function RequestBlood() {
           <div className="req-form-card">
             <div className="req-success">
               <FaCheckCircle />
-              <h2>Request submitted</h2>
-              <p>
-                Your request will appear on the Blood Requests page after
-                our team verifies it. This usually takes a short time.
-              </p>
+              <h2>{t("rb_done_title")}</h2>
+              <p>{t("rb_done_text")}</p>
 
               <div className="req-success-actions">
                 <a href="/blood-requests" className="req-btn">
-                  View Blood Requests
+                  {t("rb_view_requests")}
                 </a>
                 <button
                   type="button"
                   className="req-btn req-btn-light"
                   onClick={() => setDone(false)}
                 >
-                  Submit another
+                  {t("rb_submit_another")}
                 </button>
               </div>
             </div>
@@ -265,16 +259,13 @@ function RequestBlood() {
       <div className="req-wrap">
         <div className="req-form-card">
           <h1>
-            Request <span>Blood</span>
+            {t("rb_title_a")} <span>{t("rb_title_b")}</span>
           </h1>
-          <p className="req-form-sub">
-            Fill in the details below. Your request is shown publicly,
-            including the contact number, only after it is verified.
-          </p>
+          <p className="req-form-sub">{t("rb_subtitle")}</p>
 
           <form className="req-form" onSubmit={handleSubmit}>
             <label className="req-field">
-              Patient name *
+              {t("rb_patient_name")}
               <input
                 name="patient_name"
                 value={form.patient_name}
@@ -284,7 +275,7 @@ function RequestBlood() {
             </label>
 
             <div className="req-field req-rel" ref={bloodRef}>
-              <span>Blood group *</span>
+              <span>{t("rb_blood_group")}</span>
 
               <div className="req-drop req-drop-full">
                 <button
@@ -304,7 +295,7 @@ function RequestBlood() {
                       <strong>{form.blood_group}</strong>
                     ) : (
                       <span className="req-drop-placeholder">
-                        Select blood group
+                        {t("rb_select_blood_group")}
                       </span>
                     )}
                   </span>
@@ -346,7 +337,7 @@ function RequestBlood() {
             </div>
 
             <label className="req-field">
-              Bags of blood *
+              {t("rb_units")}
               <input
                 name="units"
                 type="number"
@@ -358,7 +349,7 @@ function RequestBlood() {
             </label>
 
             <label className="req-field">
-              Required date *
+              {t("rb_needed_date")}
               <input
                 name="needed_date"
                 type="date"
@@ -369,7 +360,7 @@ function RequestBlood() {
             </label>
 
             <label className="req-field">
-              Hospital *
+              {t("rb_hospital")}
               <input
                 name="hospital"
                 value={form.hospital}
@@ -379,7 +370,7 @@ function RequestBlood() {
             </label>
 
             <div className="req-field req-rel" ref={districtRef}>
-              <span>District *</span>
+              <span>{t("rb_district")}</span>
 
               <div className="req-loc">
                 <FaMapMarkerAlt className="req-loc-icon" />
@@ -387,7 +378,7 @@ function RequestBlood() {
                 <input
                   name="district"
                   autoComplete="off"
-                  placeholder="Enter district..."
+                  placeholder={t("rb_district_placeholder")}
                   value={form.district}
                   onChange={(e) => {
                     handleChange(e);
@@ -410,7 +401,7 @@ function RequestBlood() {
                   <button
                     type="button"
                     className="req-loc-clear"
-                    aria-label="Clear district"
+                    aria-label={t("rb_clear_district")}
                     onClick={() => {
                       setForm((prev) => ({ ...prev, district: "" }));
                       setIsDistrictOpen(true);
@@ -444,7 +435,7 @@ function RequestBlood() {
             </div>
 
             <label className="req-field">
-              Contact person *
+              {t("rb_contact_name")}
               <input
                 name="contact_name"
                 value={form.contact_name}
@@ -454,7 +445,7 @@ function RequestBlood() {
             </label>
 
             <label className="req-field">
-              Contact phone *
+              {t("rb_contact_phone")}
               <input
                 name="contact_phone"
                 type="tel"
@@ -465,13 +456,13 @@ function RequestBlood() {
             </label>
 
             <label className="req-field req-full">
-              Extra details (optional)
+              {t("rb_details")}
               <textarea
                 name="details"
                 value={form.details}
                 onChange={handleChange}
                 maxLength={300}
-                placeholder="Ward / bed number, reason, best time to call..."
+                placeholder={t("rb_details_placeholder")}
               />
             </label>
 
@@ -482,7 +473,7 @@ function RequestBlood() {
                 checked={form.urgent}
                 onChange={handleChange}
               />
-              This is urgent (needed within 24 hours)
+              {t("rb_urgent")}
             </label>
 
             {error && (
@@ -491,10 +482,7 @@ function RequestBlood() {
               </div>
             )}
 
-            <p className="req-note req-full">
-              You can have up to 3 requests waiting for approval at a
-              time. Fake or misleading requests will be removed.
-            </p>
+            <p className="req-note req-full">{t("rb_note")}</p>
 
             <div className="req-full">
               <button
@@ -502,7 +490,7 @@ function RequestBlood() {
                 className="req-btn"
                 disabled={submitting}
               >
-                {submitting ? "Submitting..." : "Submit Request"}
+                {submitting ? t("rb_submitting") : t("rb_submit")}
               </button>
             </div>
           </form>

@@ -2,6 +2,8 @@ import { useState } from "react";
 
 import { FaWhatsapp, FaFacebookF, FaLink, FaCheck } from "react-icons/fa";
 
+import { t } from "../i18n";
+
 import "../requests.css";
 
 function formatDay(iso) {
@@ -53,13 +55,13 @@ function ShareRequest({ request }) {
       setTimeout(() => setCopied(false), 2000);
     } catch {
       // Clipboard can be blocked; fall back to a prompt so the user can copy by hand
-      window.prompt("Copy this message:", message);
+      window.prompt(t("share_copy_prompt"), message);
     }
   };
 
   return (
     <div className="req-share">
-      <span className="req-share-label">Share</span>
+      <span className="req-share-label">{t("share_label")}</span>
 
       <a
         href={whatsappUrl}
@@ -84,7 +86,8 @@ function ShareRequest({ request }) {
         className="req-share-btn req-share-copy"
         onClick={handleCopy}
       >
-        {copied ? <FaCheck /> : <FaLink />} {copied ? "Copied!" : "Copy"}
+        {copied ? <FaCheck /> : <FaLink />}{" "}
+        {copied ? t("copied") : t("share_copy")}
       </button>
     </div>
   );

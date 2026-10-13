@@ -25,6 +25,9 @@ if (typeof document !== "undefined") {
   document.documentElement.lang = CURRENT_LANG;
 }
 
+// Locale for toLocaleDateString (Bangla digits and month names in Bangla)
+export const DATE_LOCALE = CURRENT_LANG === "bn" ? "bn-BD" : "en-GB";
+
 export function setLang(lang) {
   try {
     localStorage.setItem(STORAGE_KEY, lang);

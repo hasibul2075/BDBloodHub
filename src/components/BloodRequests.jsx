@@ -14,6 +14,7 @@ import {
 } from "react-icons/fa";
 
 import { supabase } from "../supabase";
+import { t, DATE_LOCALE } from "../i18n";
 import ShareRequest from "./ShareRequest";
 import "../requests.css";
 
@@ -29,9 +30,9 @@ function todayISO() {
 }
 
 function formatDate(iso) {
-  if (iso === todayISO()) return "Today";
+  if (iso === todayISO()) return t("req_today");
 
-  return new Date(`${iso}T00:00:00`).toLocaleDateString("en-GB", {
+  return new Date(`${iso}T00:00:00`).toLocaleDateString(DATE_LOCALE, {
     day: "numeric",
     month: "short",
     year: "numeric",
@@ -64,7 +65,7 @@ function BloodRequests() {
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     } catch {
-      window.prompt("Copy this number:", contactRequest.contact_phone);
+      window.prompt(t("br_copy_prompt"), contactRequest.contact_phone);
     }
   };
 
@@ -96,7 +97,7 @@ function BloodRequests() {
         if (!active) return;
 
         if (loadError) {
-          setError("Could not load blood requests. Please try again later.");
+          setError(t("br_err_load"));
         } else {
           setRequests(data || []);
         }
@@ -134,36 +135,34 @@ function BloodRequests() {
       <div className="req-wrap">
         <div className="req-head">
           <div>
-            <span className="req-tag">BLOOD REQUESTS</span>
+            <span className="req-tag">{t("br_tag")}</span>
             <h1>
-              People Who Need <span>Blood</span> Now
+              {t("br_title_1")} <span>{t("br_title_2")}</span>{" "}
+              {t("br_title_3")}
             </h1>
-            <p>
-              Verified requests from patients and families. If you can
-              help, call the contact number directly.
-            </p>
+            <p>{t("br_subtitle")}</p>
           </div>
 
           <div className="req-head-actions">
             <a href="/my-requests" className="req-btn req-btn-light">
-              My Requests
+              {t("req_my_requests")}
             </a>
             <a href="/request-blood" className="req-btn">
-              <FaPlus /> Request Blood
+              <FaPlus /> {t("req_request_blood")}
             </a>
           </div>
         </div>
 
         {focusId ? (
           <div className="req-focus-bar">
-            <span>Showing one shared request.</span>
-            <a href="/blood-requests">View all requests</a>
+            <span>{t("br_showing_one")}</span>
+            <a href="/blood-requests">{t("br_view_all")}</a>
           </div>
         ) : (
           <div className="req-filters">
             <input
               type="text"
-              placeholder="Search by district, hospital or patient..."
+              placeholder={t("br_search_placeholder")}
               value={search}
               onChange={(e) => setSearch(e.target.value)}
             />
@@ -180,8 +179,10 @@ function BloodRequests() {
                   </span>
 
                   <span>
-                    Blood Group:{" "}
-                    <strong>{bloodFilter === "" ? "All" : bloodFilter}</strong>
+                    {t("blood_group")}:{" "}
+                    <strong>
+                      {bloodFilter === "" ? t("all") : bloodFilter}
+                    </strong>
                   </span>
                 </span>
 
@@ -208,7 +209,9 @@ function BloodRequests() {
                       <FaTint />
                     </span>
 
-                    <span className="req-drop-name">Blood Group: All</span>
+                    <span className="req-drop-name">
+                      {t("fd_blood_group_all")}
+                    </span>
 
                     {bloodFilter === "" && (
                       <FaCheck className="req-drop-check" />
@@ -245,21 +248,21 @@ function BloodRequests() {
         {error && <div className="req-alert req-alert-err">{error}</div>}
 
         {loading ? (
-          <div className="req-empty">Loading requests...</div>
+          <div className="req-empty">{t("br_loading")}</div>
         ) : visible.length === 0 ? (
           <div className="req-empty">
             <p>
               {focusId
-                ? "This request is no longer active."
-                : "No active blood requests right now."}
+                ? t("br_inactive")
+                : t("br_none")}
             </p>
             {focusId ? (
               <a href="/blood-requests" className="req-btn req-btn-light">
-                View all requests
+                {t("br_view_all")}
               </a>
             ) : (
               <a href="/request-blood" className="req-btn req-btn-light">
-                Need blood? Post a request
+                {t("br_post_request")}
               </a>
             )}
           </div>
@@ -276,13 +279,18 @@ function BloodRequests() {
                   <div className="req-card-title">
                     <strong>{r.patient_name}</strong>
                     <span>
-                      {r.units} bag{r.units > 1 ? "s" : ""} needed
+                      {t(
+                        r.units > 1
+                          ? "req_bag_needed_many"
+                          : "req_bag_needed_one",
+                        { n: r.units }
+                      )}
                     </span>
                   </div>
 
                   {r.urgent && (
                     <span className="req-flag">
-                      <FaExclamationCircle /> Urgent
+                      <FaExclamationCircle /> {t("br_urgent")}
                     </span>
                   )}
                 </div>
@@ -298,7 +306,11 @@ function BloodRequests() {
                   </div>
                   <div>
                     <FaCalendarAlt />
-                    <span>Needed: {formatDate(r.needed_date)}</span>
+                    <span>
+                      {t("req_needed_on", {
+                        date: formatDate(r.needed_date),
+                      })}
+                    </span>
                   </div>
                   <div>
                     <FaUser />
@@ -319,7 +331,7 @@ function BloodRequests() {
                       setContactRequest(r);
                     }}
                   >
-                    <FaPhoneAlt /> Call {r.contact_phone}
+                    <FaPhoneAlt /> {t("br_call", { phone: r.contact_phone })}
                   </button>
                 </div>
               </article>
@@ -337,23 +349,23 @@ function BloodRequests() {
             className="contact-modal"
             onClick={(e) => e.stopPropagation()}
           >
-            <h3>Contact for this Request</h3>
+            <h3>{t("br_modal_title")}</h3>
 
             <p>
-              <strong>Patient:</strong> {contactRequest.patient_name}
+              <strong>{t("br_patient")}</strong> {contactRequest.patient_name}
             </p>
 
             <p>
-              <strong>Blood Group:</strong> {contactRequest.blood_group}
+              <strong>{t("blood_group")}:</strong> {contactRequest.blood_group}
             </p>
 
             <p>
-              <strong>Hospital:</strong> {contactRequest.hospital},{" "}
+              <strong>{t("br_hospital")}</strong> {contactRequest.hospital},{" "}
               {contactRequest.district}
             </p>
 
             <p>
-              <strong>Contact Person:</strong>{" "}
+              <strong>{t("br_contact_person")}</strong>{" "}
               {contactRequest.contact_name}
             </p>
 
@@ -364,17 +376,17 @@ function BloodRequests() {
               href={`tel:${contactRequest.contact_phone}`}
               className="req-modal-call"
             >
-              Call Now
+              {t("br_call_now")}
             </a>
 
             <button type="button" onClick={copyPhone}>
-              Copy Number
+              {t("copy_number")}
             </button>
 
-            {copied && <p>Copied!</p>}
+            {copied && <p>{t("copied")}</p>}
 
             <button type="button" onClick={() => setContactRequest(null)}>
-              Close
+              {t("close")}
             </button>
           </div>
         </div>
