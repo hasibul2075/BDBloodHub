@@ -1,3 +1,5 @@
+import { t } from "../i18n";
+
 function BloodGroups() {
   const groups = [
     "A+",
@@ -18,10 +20,10 @@ function BloodGroups() {
   return (
     <section className="blood-groups">
       <div className="container">
-        <span className="section-tag">QUICK SEARCH</span>
+        <span className="section-tag">{t("bg_tag")}</span>
 
         <h2 className="section-title">
-          Find by Blood Group
+          {t("bg_title")}
         </h2>
 
         <div className="group-grid">

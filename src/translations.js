@@ -286,6 +286,10 @@ export const translations = {
     bd_err_login: "Please login before registering as a donor.",
     bd_err_failed: "Failed to register as donor.",
     bd_err_generic: "Something went wrong. Please try again.",
+
+    // ----- home page: blood group quick search -----
+    bg_tag: "QUICK SEARCH",
+    bg_title: "Find by Blood Group",
   },
 
   bn: {
@@ -571,5 +575,9 @@ export const translations = {
     bd_err_login: "ডোনার হিসেবে নিবন্ধনের আগে অনুগ্রহ করে লগইন করুন।",
     bd_err_failed: "ডোনার হিসেবে নিবন্ধন করা যায়নি।",
     bd_err_generic: "কিছু একটা ভুল হয়েছে। অনুগ্রহ করে আবার চেষ্টা করুন।",
+
+    // ----- home page: blood group quick search -----
+    bg_tag: "দ্রুত খুঁজুন",
+    bg_title: "রক্তের গ্রুপ দিয়ে খুঁজুন",
   },
 };
