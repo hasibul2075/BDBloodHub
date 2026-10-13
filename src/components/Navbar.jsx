@@ -11,6 +11,7 @@ const NAV_LINKS = [
   ["/find-donors", "nav_find_donors"],
   ["/become-donor", "nav_become_donor"],
   ["/blood-requests", "nav_blood_requests"],
+  ["/blood-guide", "nav_blood_guide"],
   ["/about", "nav_about"],
 ];
 

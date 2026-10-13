@@ -35,6 +35,10 @@ function Footer() {
             {t("nav_become_donor")}
           </a>
 
+          <a href="/blood-guide">
+            {t("nav_blood_guide")}
+          </a>
+
           <a href="/about">
             {t("nav_about")}
           </a>

@@ -20,7 +20,20 @@ import BloodRequests from "./components/BloodRequests";
 import RequestBlood from "./components/RequestBlood";
 import AdminRequests from "./components/AdminRequests";
 import MyRequests from "./components/MyRequests";
+import BloodGuide from "./components/BloodGuide";
 function App() {
+  if (window.location.pathname === "/blood-guide") {
+    return (
+      <>
+        <Navbar />
+
+        <div className="page-transition">
+          <BloodGuide />
+          <Footer />
+        </div>
+      </>
+    );
+  }
     if (window.location.pathname === "/my-requests") {
     return (
       <>
