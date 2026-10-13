@@ -5,6 +5,7 @@ import {
   FaMapMarkerAlt,
   FaHeart,
 } from "react-icons/fa";
+import { t } from "../i18n";
 
 function AboutUs() {
   return (
@@ -13,15 +14,11 @@ function AboutUs() {
       {/* PAGE HEADER */}
       <section className="about-header">
         <div className="container">
-          <span className="section-tag">ABOUT US</span>
+          <span className="section-tag">{t("ab_tag")}</span>
 
-          <h1>Connecting People Through Blood</h1>
+          <h1>{t("ab_title")}</h1>
 
-          <p>
-            BDBloodHub is a simple platform that helps people
-            find blood donors and makes it easier for donors to
-            help someone in need.
-          </p>
+          <p>{t("ab_intro")}</p>
         </div>
       </section>
 
@@ -34,34 +31,19 @@ function AboutUs() {
 
             <div className="about-content">
               <span className="section-tag">
-                WHO WE ARE
+                {t("ab_who_tag")}
               </span>
 
               <h2>
-                Making Blood Donation
-                <span> Easier & Faster</span>
+                {t("ab_who_title_1")}
+                <span> {t("ab_who_title_2")}</span>
               </h2>
 
-              <p>
-                BDBloodHub is a blood donor platform designed to
-                connect people who need blood with available
-                donors across Bangladesh.
-              </p>
+              <p>{t("ab_who_p1")}</p>
 
-              <p>
-                Our goal is to make the process of finding a
-                blood donor simple, accessible and convenient.
-                Instead of searching through different sources,
-                people can use one platform to find donors based
-                on blood group and location.
-              </p>
+              <p>{t("ab_who_p2")}</p>
 
-              <p>
-                At the same time, people who are willing to donate
-                blood can register themselves and become part of
-                a community that helps others when they need it
-                most.
-              </p>
+              <p>{t("ab_who_p3")}</p>
             </div>
 
 
@@ -70,14 +52,9 @@ function AboutUs() {
                 <FaHeart />
               </div>
 
-              <h3>
-                Every Donor Can Make a Difference
-              </h3>
+              <h3>{t("ab_highlight_title")}</h3>
 
-              <p>
-                A simple connection between a donor and someone
-                in need can make a meaningful difference.
-              </p>
+              <p>{t("ab_highlight_text")}</p>
             </div>
 
           </div>
@@ -92,18 +69,12 @@ function AboutUs() {
 
           <div className="about-section-heading">
             <span className="section-tag">
-              OUR MISSION
+              {t("ab_mission_tag")}
             </span>
 
-            <h2>
-              Helping People Find Blood When They Need It
-            </h2>
+            <h2>{t("ab_mission_title")}</h2>
 
-            <p>
-              We want to make blood donor discovery easier by
-              bringing donors and people in need together through
-              a simple digital platform.
-            </p>
+            <p>{t("ab_mission_text")}</p>
           </div>
 
 
@@ -114,12 +85,9 @@ function AboutUs() {
                 <FaSearch />
               </div>
 
-              <h3>Find Donors Easily</h3>
+              <h3>{t("ab_m1_title")}</h3>
 
-              <p>
-                Search for donors using blood group and location
-                to quickly discover available donors.
-              </p>
+              <p>{t("ab_m1_text")}</p>
             </div>
 
 
@@ -128,12 +96,9 @@ function AboutUs() {
                 <FaUserPlus />
               </div>
 
-              <h3>Become a Donor</h3>
+              <h3>{t("nav_become_donor")}</h3>
 
-              <p>
-                Register as a blood donor and make yourself
-                available to people who may need your help.
-              </p>
+              <p>{t("ab_m2_text")}</p>
             </div>
 
 
@@ -142,12 +107,9 @@ function AboutUs() {
                 <FaMapMarkerAlt />
               </div>
 
-              <h3>Connect Locally</h3>
+              <h3>{t("ab_m3_title")}</h3>
 
-              <p>
-                Find blood donors based on their district or
-                location across Bangladesh.
-              </p>
+              <p>{t("ab_m3_text")}</p>
             </div>
 
           </div>
@@ -162,17 +124,12 @@ function AboutUs() {
 
           <div className="about-section-heading">
             <span className="section-tag">
-              WHY BDBLOODHUB
+              {t("ab_why_tag")}
             </span>
 
-            <h2>
-              Simple. Accessible. Community Driven.
-            </h2>
+            <h2>{t("ab_why_title")}</h2>
 
-            <p>
-              BDBloodHub is designed with a simple goal:
-              make blood donor connections easier for everyone.
-            </p>
+            <p>{t("ab_why_text")}</p>
           </div>
 
 
@@ -182,12 +139,9 @@ function AboutUs() {
               <FaTint />
 
               <div>
-                <h3>Blood Group Focused</h3>
+                <h3>{t("ab_w1_title")}</h3>
 
-                <p>
-                  Easily identify donors based on the blood
-                  group you need.
-                </p>
+                <p>{t("ab_w1_text")}</p>
               </div>
             </div>
 
@@ -196,12 +150,9 @@ function AboutUs() {
               <FaMapMarkerAlt />
 
               <div>
-                <h3>Location Based</h3>
+                <h3>{t("ab_w2_title")}</h3>
 
-                <p>
-                  Search for donors according to their district
-                  or location.
-                </p>
+                <p>{t("ab_w2_text")}</p>
               </div>
             </div>
 
@@ -210,12 +161,9 @@ function AboutUs() {
               <FaHeart />
 
               <div>
-                <h3>Built for Community</h3>
+                <h3>{t("ab_w3_title")}</h3>
 
-                <p>
-                  Encourage people to donate and support others
-                  when help is needed.
-                </p>
+                <p>{t("ab_w3_text")}</p>
               </div>
             </div>
 
@@ -232,17 +180,12 @@ function AboutUs() {
           <div className="about-cta-content">
 
             <span className="section-tag">
-              MAKE A DIFFERENCE
+              {t("cta_tag")}
             </span>
 
-            <h2>
-              Be Part of the Community
-            </h2>
+            <h2>{t("ab_cta_title")}</h2>
 
-            <p>
-              Whether you need blood or want to help someone
-              through donation, BDBloodHub is here to connect you.
-            </p>
+            <p>{t("ab_cta_text")}</p>
 
             <div className="about-cta-buttons">
 
@@ -250,14 +193,14 @@ function AboutUs() {
                 href="/become-donor"
                 className="about-cta-primary"
               >
-                Become a Donor
+                {t("nav_become_donor")}
               </a>
 
               <a
                 href="/find-donors"
                 className="about-cta-secondary"
               >
-                Find a Donor
+                {t("cta_find")}
               </a>
 
             </div>

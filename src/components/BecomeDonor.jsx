@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { supabase } from "../supabase";
+import { t } from "../i18n";
 
 import {
   FaUser,
@@ -175,7 +176,7 @@ const handleSubmit = async (e) => {
 
     if (!session) {
       throw new Error(
-        "Please login before registering as a donor."
+        t("bd_err_login")
       );
     }
 
@@ -206,7 +207,7 @@ const handleSubmit = async (e) => {
     if (!response.ok || !data.success) {
       throw new Error(
         data.message ||
-          "Failed to register as donor."
+          t("bd_err_failed")
       );
     }
 
@@ -233,7 +234,7 @@ const handleSubmit = async (e) => {
 
     setError(
       error.message ||
-        "Something went wrong. Please try again."
+        t("bd_err_generic")
     );
   } finally {
     setLoading(false);
@@ -246,14 +247,13 @@ const handleSubmit = async (e) => {
       <section className="become-donor-header">
         <div className="container">
           <span className="section-tag">
-            BECOME A DONOR
+            {t("bd_tag")}
           </span>
 
-          <h1>Become a Blood Donor</h1>
+          <h1>{t("bd_title")}</h1>
 
           <p>
-            Your one donation can make a difference in someone's
-            life. Register yourself as a donor and help people in need.
+            {t("bd_subtitle")}
           </p>
         </div>
       </section>
@@ -266,14 +266,13 @@ const handleSubmit = async (e) => {
             {/* FORM INTRO */}
             <div className="donor-form-intro">
               <span className="section-tag">
-                DONOR REGISTRATION
+                {t("bd_form_tag")}
               </span>
 
-              <h2>Register as a Donor</h2>
+              <h2>{t("bd_form_title")}</h2>
 
               <p>
-                Fill in your information below so people can find
-                you when they need blood.
+                {t("bd_form_text")}
               </p>
             </div>
 
@@ -286,7 +285,7 @@ const handleSubmit = async (e) => {
               {/* FULL NAME */}
               <div className="form-group">
                 <label htmlFor="name">
-                  Full Name
+                  {t("bd_name")}
                 </label>
 
                 <div className="input-wrapper">
@@ -296,7 +295,7 @@ const handleSubmit = async (e) => {
                     id="name"
                     type="text"
                     name="name"
-                    placeholder="Enter your full name"
+                    placeholder={t("bd_name_ph")}
                     value={formData.name}
                     onChange={handleChange}
                     required
@@ -307,7 +306,7 @@ const handleSubmit = async (e) => {
               {/* BLOOD GROUP */}
               <div className="form-group">
                 <label>
-                  Blood Group
+                  {t("blood_group")}
                 </label>
 
                 <div className="donor-blood-wrapper">
@@ -330,7 +329,7 @@ const handleSubmit = async (e) => {
                       <span>
                         {formData.blood
                           ? formData.blood
-                          : "Select blood group"}
+                          : t("rb_select_blood_group")}
                       </span>
                     </span>
 
@@ -362,7 +361,7 @@ const handleSubmit = async (e) => {
                         }}
                       >
                         <span className="donor-option-placeholder">
-                          Select blood group
+                          {t("rb_select_blood_group")}
                         </span>
 
                         {formData.blood === "" && (
@@ -405,7 +404,7 @@ const handleSubmit = async (e) => {
               {/* PHONE */}
               <div className="form-group">
                 <label htmlFor="phone">
-                  Phone Number
+                  {t("bd_phone")}
                 </label>
 
                 <div className="input-wrapper">
@@ -426,7 +425,7 @@ const handleSubmit = async (e) => {
               {/* EMAIL */}
               <div className="form-group">
                 <label htmlFor="email">
-                  Email Address
+                  {t("bd_email")}
                 </label>
 
                 <div className="input-wrapper">
@@ -446,7 +445,7 @@ const handleSubmit = async (e) => {
               {/* LOCATION */}
               <div className="form-group">
                 <label htmlFor="location">
-                  District / Location
+                  {t("bd_location")}
                 </label>
 
                 <div className="donor-location-wrapper">
@@ -458,7 +457,7 @@ const handleSubmit = async (e) => {
                       id="location"
                       type="text"
                       name="location"
-                      placeholder="Enter your district"
+                      placeholder={t("bd_location_ph")}
                       value={formData.location}
                       onChange={handleLocationChange}
                       onFocus={() => {
@@ -508,7 +507,7 @@ const handleSubmit = async (e) => {
               {/* LAST DONATION */}
               <div className="form-group">
                 <label htmlFor="lastDonation">
-                  Last Donation Date
+                  {t("bd_last_donation")}
                 </label>
 
                 <div className="input-wrapper">
@@ -527,7 +526,7 @@ const handleSubmit = async (e) => {
               {/* AVAILABILITY */}
               <div className="form-group availability-group">
                 <label>
-                  Are you currently available to donate?
+                  {t("bd_avail_q")}
                 </label>
 
                 <div className="availability-options">
@@ -544,7 +543,7 @@ const handleSubmit = async (e) => {
                     />
 
                     <span>
-                      Yes, I'm available
+                      {t("bd_avail_yes")}
                     </span>
                   </label>
 
@@ -560,7 +559,7 @@ const handleSubmit = async (e) => {
                     />
 
                     <span>
-                      Not right now
+                      {t("bd_avail_no")}
                     </span>
                   </label>
 
@@ -581,14 +580,14 @@ const handleSubmit = async (e) => {
                 disabled={loading}
               >
                 {loading
-                  ? "Registering..."
-                  : "Register as Donor"}
+                  ? t("bd_submitting")
+                  : t("bd_submit")}
               </button>
 
               {/* SUCCESS MESSAGE */}
               {submitted && (
                 <div className="donor-success-message">
-                  ✓ Registration submitted successfully!
+                  {t("bd_success")}
                 </div>
               )}
 

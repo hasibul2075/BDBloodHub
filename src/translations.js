@@ -215,6 +215,77 @@ export const translations = {
     cta_text:
       "Your one donation can help someone in need. Join BD Blood Hub and become a part of our lifesaving community.",
     cta_find: "Find a Donor",
+
+    // ----- about us page -----
+    ab_tag: "ABOUT US",
+    ab_title: "Connecting People Through Blood",
+    ab_intro:
+      "BDBloodHub is a simple platform that helps people find blood donors and makes it easier for donors to help someone in need.",
+    ab_who_tag: "WHO WE ARE",
+    ab_who_title_1: "Making Blood Donation",
+    ab_who_title_2: "Easier & Faster",
+    ab_who_p1:
+      "BDBloodHub is a blood donor platform designed to connect people who need blood with available donors across Bangladesh.",
+    ab_who_p2:
+      "Our goal is to make the process of finding a blood donor simple, accessible and convenient. Instead of searching through different sources, people can use one platform to find donors based on blood group and location.",
+    ab_who_p3:
+      "At the same time, people who are willing to donate blood can register themselves and become part of a community that helps others when they need it most.",
+    ab_highlight_title: "Every Donor Can Make a Difference",
+    ab_highlight_text:
+      "A simple connection between a donor and someone in need can make a meaningful difference.",
+    ab_mission_tag: "OUR MISSION",
+    ab_mission_title: "Helping People Find Blood When They Need It",
+    ab_mission_text:
+      "We want to make blood donor discovery easier by bringing donors and people in need together through a simple digital platform.",
+    ab_m1_title: "Find Donors Easily",
+    ab_m1_text:
+      "Search for donors using blood group and location to quickly discover available donors.",
+    ab_m2_text:
+      "Register as a blood donor and make yourself available to people who may need your help.",
+    ab_m3_title: "Connect Locally",
+    ab_m3_text:
+      "Find blood donors based on their district or location across Bangladesh.",
+    ab_why_tag: "WHY BDBLOODHUB",
+    ab_why_title: "Simple. Accessible. Community Driven.",
+    ab_why_text:
+      "BDBloodHub is designed with a simple goal: make blood donor connections easier for everyone.",
+    ab_w1_title: "Blood Group Focused",
+    ab_w1_text: "Easily identify donors based on the blood group you need.",
+    ab_w2_title: "Location Based",
+    ab_w2_text:
+      "Search for donors according to their district or location.",
+    ab_w3_title: "Built for Community",
+    ab_w3_text:
+      "Encourage people to donate and support others when help is needed.",
+    ab_cta_title: "Be Part of the Community",
+    ab_cta_text:
+      "Whether you need blood or want to help someone through donation, BDBloodHub is here to connect you.",
+
+    // ----- become a donor page -----
+    bd_tag: "BECOME A DONOR",
+    bd_title: "Become a Blood Donor",
+    bd_subtitle:
+      "Your one donation can make a difference in someone's life. Register yourself as a donor and help people in need.",
+    bd_form_tag: "DONOR REGISTRATION",
+    bd_form_title: "Register as a Donor",
+    bd_form_text:
+      "Fill in your information below so people can find you when they need blood.",
+    bd_name: "Full Name",
+    bd_name_ph: "Enter your full name",
+    bd_phone: "Phone Number",
+    bd_email: "Email Address",
+    bd_location: "District / Location",
+    bd_location_ph: "Enter your district",
+    bd_last_donation: "Last Donation Date",
+    bd_avail_q: "Are you currently available to donate?",
+    bd_avail_yes: "Yes, I'm available",
+    bd_avail_no: "Not right now",
+    bd_submit: "Register as Donor",
+    bd_submitting: "Registering...",
+    bd_success: "✓ Registration submitted successfully!",
+    bd_err_login: "Please login before registering as a donor.",
+    bd_err_failed: "Failed to register as donor.",
+    bd_err_generic: "Something went wrong. Please try again.",
   },
 
   bn: {
@@ -430,5 +501,75 @@ export const translations = {
     cta_text:
       "আপনার একটি রক্তদান কারও জীবন বাঁচাতে পারে। BD Blood Hub-এ যোগ দিন আর আমাদের জীবনরক্ষাকারী কমিউনিটির অংশ হয়ে উঠুন।",
     cta_find: "ডোনার খুঁজুন",
+
+    // ----- about us page -----
+    ab_tag: "আমাদের সম্পর্কে",
+    ab_title: "রক্তের মাধ্যমে মানুষে মানুষে সংযোগ",
+    ab_intro:
+      "BDBloodHub একটি সহজ প্ল্যাটফর্ম, যা মানুষকে রক্তদাতা খুঁজে পেতে সাহায্য করে এবং ডোনারদের পক্ষে প্রয়োজনে কারও পাশে দাঁড়ানো সহজ করে।",
+    ab_who_tag: "আমরা কারা",
+    ab_who_title_1: "রক্তদান হোক",
+    ab_who_title_2: "সহজ ও দ্রুত",
+    ab_who_p1:
+      "BDBloodHub একটি রক্তদাতা প্ল্যাটফর্ম, যা সারা বাংলাদেশে রক্তের প্রয়োজনে থাকা মানুষের সাথে রক্ত দিতে পারবেন এমন ডোনারদের যোগাযোগ করিয়ে দেয়।",
+    ab_who_p2:
+      "আমাদের লক্ষ্য রক্তদাতা খোঁজার প্রক্রিয়াকে সহজ, সবার নাগালের মধ্যে এবং ঝামেলাহীন করা। নানা জায়গায় খোঁজাখুঁজির বদলে মানুষ একটি প্ল্যাটফর্মেই রক্তের গ্রুপ ও এলাকা অনুযায়ী ডোনার খুঁজে নিতে পারেন।",
+    ab_who_p3:
+      "একই সাথে যাঁরা রক্ত দিতে ইচ্ছুক, তাঁরা নিজেরা নিবন্ধন করে এমন একটি কমিউনিটির অংশ হতে পারেন, যারা সবচেয়ে প্রয়োজনের সময় অন্যের পাশে দাঁড়ায়।",
+    ab_highlight_title: "প্রতিটি রক্তদাতাই পারেন পরিবর্তন আনতে",
+    ab_highlight_text:
+      "একজন ডোনার আর প্রয়োজনে থাকা মানুষের মধ্যে একটি সহজ যোগাযোগই বড় পরিবর্তন আনতে পারে।",
+    ab_mission_tag: "আমাদের লক্ষ্য",
+    ab_mission_title: "প্রয়োজনের সময় মানুষকে রক্ত খুঁজে পেতে সাহায্য করা",
+    ab_mission_text:
+      "একটি সহজ ডিজিটাল প্ল্যাটফর্মের মাধ্যমে ডোনার ও প্রয়োজনে থাকা মানুষকে একসাথে এনে রক্তদাতা খুঁজে পাওয়া সহজ করতে চাই।",
+    ab_m1_title: "সহজে ডোনার খুঁজুন",
+    ab_m1_text:
+      "রক্তের গ্রুপ ও এলাকা দিয়ে খুঁজে দ্রুত পেয়ে যান রক্ত দিতে পারবেন এমন ডোনার।",
+    ab_m2_text:
+      "রক্তদাতা হিসেবে নিবন্ধন করুন এবং যাঁদের আপনার সাহায্য লাগতে পারে, তাঁদের কাছে নিজেকে সহজলভ্য করুন।",
+    ab_m3_title: "নিজের এলাকায় যোগাযোগ",
+    ab_m3_text:
+      "বাংলাদেশজুড়ে জেলা বা এলাকা অনুযায়ী রক্তদাতা খুঁজে নিন।",
+    ab_why_tag: "কেন BDBloodHub",
+    ab_why_title: "সহজ। সবার নাগালে। কমিউনিটির জন্য।",
+    ab_why_text:
+      "BDBloodHub তৈরি হয়েছে একটি সহজ লক্ষ্য নিয়ে: সবার জন্য রক্তদাতার সাথে যোগাযোগ সহজ করা।",
+    ab_w1_title: "রক্তের গ্রুপভিত্তিক",
+    ab_w1_text: "আপনার প্রয়োজনীয় রক্তের গ্রুপ অনুযায়ী সহজেই ডোনার চিনে নিন।",
+    ab_w2_title: "এলাকাভিত্তিক",
+    ab_w2_text: "জেলা বা এলাকা অনুযায়ী ডোনার খুঁজুন।",
+    ab_w3_title: "কমিউনিটির জন্য তৈরি",
+    ab_w3_text:
+      "মানুষকে রক্ত দিতে উৎসাহিত করে এবং সাহায্যের দরকারে একে অপরের পাশে দাঁড়াতে সহায়তা করে।",
+    ab_cta_title: "কমিউনিটির অংশ হোন",
+    ab_cta_text:
+      "আপনার রক্ত দরকার হোক বা রক্ত দিয়ে কাউকে সাহায্য করতে চান, BDBloodHub আপনাকে যুক্ত করতে এখানে আছে।",
+
+    // ----- become a donor page -----
+    bd_tag: "ডোনার হোন",
+    bd_title: "রক্তদাতা হোন",
+    bd_subtitle:
+      "আপনার একটি রক্তদান কারও জীবনে পরিবর্তন আনতে পারে। ডোনার হিসেবে নিবন্ধন করুন এবং প্রয়োজনে থাকা মানুষের পাশে দাঁড়ান।",
+    bd_form_tag: "ডোনার নিবন্ধন",
+    bd_form_title: "ডোনার হিসেবে নিবন্ধন করুন",
+    bd_form_text:
+      "নিচে আপনার তথ্য দিন, যাতে রক্তের দরকারে মানুষ আপনাকে খুঁজে পায়।",
+    bd_name: "পূর্ণ নাম",
+    bd_name_ph: "আপনার পূর্ণ নাম লিখুন",
+    bd_phone: "ফোন নম্বর",
+    bd_email: "ইমেইল ঠিকানা",
+    bd_location: "জেলা / এলাকা",
+    bd_location_ph: "ইংরেজিতে জেলার নাম লিখুন (যেমন Dhaka)",
+    bd_last_donation: "সর্বশেষ রক্তদানের তারিখ",
+    bd_avail_q: "আপনি কি এখন রক্ত দিতে পারবেন?",
+    bd_avail_yes: "হ্যাঁ, আমি রক্ত দিতে পারব",
+    bd_avail_no: "এখন না",
+    bd_submit: "ডোনার হিসেবে নিবন্ধন করুন",
+    bd_submitting: "নিবন্ধন হচ্ছে...",
+    bd_success: "✓ নিবন্ধন সফলভাবে জমা হয়েছে!",
+    bd_err_login: "ডোনার হিসেবে নিবন্ধনের আগে অনুগ্রহ করে লগইন করুন।",
+    bd_err_failed: "ডোনার হিসেবে নিবন্ধন করা যায়নি।",
+    bd_err_generic: "কিছু একটা ভুল হয়েছে। অনুগ্রহ করে আবার চেষ্টা করুন।",
   },
 };
