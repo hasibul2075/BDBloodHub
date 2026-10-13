@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { FaUsers, FaTint, FaHeart } from "react-icons/fa";
+import { t, DATE_LOCALE } from "../i18n";
 
 function Stats() {
   const [donorCount, setDonorCount] = useState(0);
@@ -26,24 +27,24 @@ function Stats() {
         <div className="stat-card">
           <FaUsers />
           <div>
-            <h3>{donorCount}</h3>
-            <p>Active Donors Registered</p>
+            <h3>{(Number(donorCount) || 0).toLocaleString(DATE_LOCALE)}</h3>
+            <p>{t("stats_donors")}</p>
           </div>
         </div>
 
         <div className="stat-card">
           <FaTint />
           <div>
-            <h3>24/7</h3>
-            <p>Blood Donor Availability</p>
+            <h3>{t("stats_247")}</h3>
+            <p>{t("stats_availability")}</p>
           </div>
         </div>
 
         <div className="stat-card">
           <FaHeart />
           <div>
-            <h3>100%</h3>
-            <p>Community Driven</p>
+            <h3>{t("stats_100")}</h3>
+            <p>{t("stats_community")}</p>
           </div>
         </div>
 

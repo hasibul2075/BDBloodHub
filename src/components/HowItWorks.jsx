@@ -1,19 +1,21 @@
+import { t } from "../i18n";
+
 function HowItWorks() {
   const steps = [
     {
-      number: "01",
-      title: "Search for a Donor",
-      text: "Select your required blood group and enter your location to find nearby donors.",
+      number: t("hiw_n1"),
+      title: t("hiw_s1_title"),
+      text: t("hiw_s1_text"),
     },
     {
-      number: "02",
-      title: "Choose a Donor",
-      text: "Browse available donors and check their blood group, location and availability.",
+      number: t("hiw_n2"),
+      title: t("hiw_s2_title"),
+      text: t("hiw_s2_text"),
     },
     {
-      number: "03",
-      title: "Contact & Donate",
-      text: "Contact the donor directly and coordinate the blood donation process.",
+      number: t("hiw_n3"),
+      title: t("hiw_s3_title"),
+      text: t("hiw_s3_text"),
     },
   ];
 
@@ -21,10 +23,10 @@ function HowItWorks() {
     <section className="how-it-works">
       <div className="container">
 
-        <span className="section-tag">HOW IT WORKS</span>
+        <span className="section-tag">{t("hiw_tag")}</span>
 
         <h2 className="section-title">
-          Get Blood in 3 Simple Steps
+          {t("hiw_title")}
         </h2>
 
         <div className="steps-grid">

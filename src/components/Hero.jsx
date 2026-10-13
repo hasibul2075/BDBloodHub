@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { FaTint, FaChevronDown, FaCheck, FaMapMarkerAlt } from "react-icons/fa";
+import { t } from "../i18n";
 
 function Hero() {
   const [selectedGroup, setSelectedGroup] = useState("All");
@@ -115,7 +116,7 @@ const filteredDistricts =
 
   const handleSearch = () => {
     if (selectedGroup === "All" && !location.trim()) {
-      alert("Please select a blood group or enter a location.");
+      alert(t("hero_alert_select"));
       return;
     }
 
@@ -140,19 +141,18 @@ const filteredDistricts =
         <div className="hero-left">
 
           <span className="badge">
-            URGENT DONATION PLATFORM
+            {t("hero_badge")}
           </span>
 
           <h1>
-            Find Blood Donors <br />
-            Near You —{" "}
-            <span className="red">Save a Life</span>{" "}
-            Today
+            {t("hero_title_1")} <br />
+            {t("hero_title_2")}{" "}
+            <span className="red">{t("hero_title_red")}</span>{" "}
+            {t("hero_title_3")}
           </h1>
 
           <p>
-            Join our network of thousands of volunteer donors.
-            Quick search, immediate contact and secure process.
+            {t("hero_desc")}
           </p>
 
           {/* SEARCH BOX */}
@@ -175,8 +175,10 @@ const filteredDistricts =
                   </span>
 
                   <span>
-                    Blood Group:{" "}
-                    <strong>{selectedGroup}</strong>
+                    {t("blood_group")}:{" "}
+                    <strong>
+                      {selectedGroup === "All" ? t("all") : selectedGroup}
+                    </strong>
                   </span>
 
                 </span>
@@ -211,7 +213,7 @@ const filteredDistricts =
                       </span>
 
                       <span>
-                        Blood Group: All
+                        {t("fd_blood_group_all")}
                       </span>
 
                     </span>
@@ -266,7 +268,7 @@ const filteredDistricts =
 
                 <input
                   type="text"
-                  placeholder="Enter Location..."
+                  placeholder={t("fd_location_placeholder")}
                   value={location}
                   onChange={handleLocationChange}
                   onFocus={() => {
@@ -322,7 +324,7 @@ const filteredDistricts =
                     ))
                   ) : (
                     <div className="no-location">
-                      No district found
+                      {t("hero_no_district")}
                     </div>
                   )}
 
@@ -336,7 +338,7 @@ const filteredDistricts =
               type="button"
               onClick={handleSearch}
             >
-              Search Donors
+              {t("fd_search")}
             </button>
 
           </div>

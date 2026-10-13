@@ -177,6 +177,44 @@ export const translations = {
     mr_err_cancel: "Could not cancel this request. Please try again.",
     mr_ok_fulfilled: "Marked as fulfilled. Thank you for updating!",
     mr_ok_cancelled: "Request cancelled.",
+
+    // ----- home page: hero, stats, how it works, cta -----
+    hero_badge: "URGENT DONATION PLATFORM",
+    hero_title_1: "Find Blood Donors",
+    hero_title_2: "Near You —",
+    hero_title_red: "Save a Life",
+    hero_title_3: "Today",
+    hero_desc:
+      "Join our network of thousands of volunteer donors. Quick search, immediate contact and secure process.",
+    hero_no_district: "No district found",
+    hero_alert_select: "Please select a blood group or enter a location.",
+
+    stats_donors: "Active Donors Registered",
+    stats_availability: "Blood Donor Availability",
+    stats_community: "Community Driven",
+    stats_247: "24/7",
+    stats_100: "100%",
+
+    hiw_tag: "HOW IT WORKS",
+    hiw_title: "Get Blood in 3 Simple Steps",
+    hiw_n1: "01",
+    hiw_n2: "02",
+    hiw_n3: "03",
+    hiw_s1_title: "Search for a Donor",
+    hiw_s1_text:
+      "Select your required blood group and enter your location to find nearby donors.",
+    hiw_s2_title: "Choose a Donor",
+    hiw_s2_text:
+      "Browse available donors and check their blood group, location and availability.",
+    hiw_s3_title: "Contact & Donate",
+    hiw_s3_text:
+      "Contact the donor directly and coordinate the blood donation process.",
+
+    cta_tag: "MAKE A DIFFERENCE",
+    cta_title: "Ready to Save a Life?",
+    cta_text:
+      "Your one donation can help someone in need. Join BD Blood Hub and become a part of our lifesaving community.",
+    cta_find: "Find a Donor",
   },
 
   bn: {
@@ -354,5 +392,43 @@ export const translations = {
     mr_err_cancel: "অনুরোধটি বাতিল করা যায়নি। আবার চেষ্টা করুন।",
     mr_ok_fulfilled: "পূর্ণ হয়েছে বলে চিহ্নিত করা হয়েছে। আপডেট করার জন্য ধন্যবাদ!",
     mr_ok_cancelled: "অনুরোধ বাতিল হয়েছে।",
+
+    // ----- home page: hero, stats, how it works, cta -----
+    hero_badge: "জরুরি রক্তদান প্ল্যাটফর্ম",
+    hero_title_1: "আপনার কাছের রক্তদাতা",
+    hero_title_2: "খুঁজুন —",
+    hero_title_red: "জীবন বাঁচান",
+    hero_title_3: "আজই",
+    hero_desc:
+      "হাজারো স্বেচ্ছাসেবী রক্তদাতার নেটওয়ার্কে যোগ দিন। দ্রুত খোঁজা, সরাসরি যোগাযোগ আর নিরাপদ প্রক্রিয়া।",
+    hero_no_district: "কোনো জেলা পাওয়া যায়নি",
+    hero_alert_select: "একটি রক্তের গ্রুপ বেছে নিন অথবা এলাকা লিখুন।",
+
+    stats_donors: "নিবন্ধিত সক্রিয় রক্তদাতা",
+    stats_availability: "যেকোনো সময় রক্তদাতা পাওয়া যায়",
+    stats_community: "কমিউনিটি-চালিত",
+    stats_247: "২৪/৭",
+    stats_100: "১০০%",
+
+    hiw_tag: "কীভাবে কাজ করে",
+    hiw_title: "৩টি সহজ ধাপে রক্ত পান",
+    hiw_n1: "০১",
+    hiw_n2: "০২",
+    hiw_n3: "০৩",
+    hiw_s1_title: "ডোনার খুঁজুন",
+    hiw_s1_text:
+      "প্রয়োজনীয় রক্তের গ্রুপ বেছে নিন এবং আপনার এলাকা লিখে কাছের ডোনার খুঁজে নিন।",
+    hiw_s2_title: "ডোনার বেছে নিন",
+    hiw_s2_text:
+      "ডোনারদের তালিকা দেখুন এবং তাঁদের রক্তের গ্রুপ, এলাকা ও রক্ত দিতে পারার অবস্থা যাচাই করুন।",
+    hiw_s3_title: "যোগাযোগ ও রক্তদান",
+    hiw_s3_text:
+      "ডোনারের সাথে সরাসরি যোগাযোগ করুন এবং রক্তদানের বিষয়টি ঠিক করে নিন।",
+
+    cta_tag: "পরিবর্তন আনুন",
+    cta_title: "জীবন বাঁচাতে প্রস্তুত?",
+    cta_text:
+      "আপনার একটি রক্তদান কারও জীবন বাঁচাতে পারে। BD Blood Hub-এ যোগ দিন আর আমাদের জীবনরক্ষাকারী কমিউনিটির অংশ হয়ে উঠুন।",
+    cta_find: "ডোনার খুঁজুন",
   },
 };
