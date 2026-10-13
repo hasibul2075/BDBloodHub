@@ -343,7 +343,7 @@ function MyDonorProfile() {
 
   if (!donor) {
     return (
-      <main className="auth-page">
+        <main className="auth-page profile-empty-page">
         <section className="auth-section">
           <div className="auth-container">
             <div className="auth-info">
@@ -407,7 +407,7 @@ function MyDonorProfile() {
     : "Not provided";
 
   return (
-    <main className="auth-page">
+       <main className="auth-page profile-empty-page">
       <section className="auth-section">
         <div className="auth-container">
 

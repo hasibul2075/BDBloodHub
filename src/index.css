@@ -6473,3 +6473,8 @@ body {
     mask-composite: intersect;
   }
 }
+/* My profile page */
+.auth-page.profile-empty-page .auth-info {
+  align-self: start !important;
+  transform: none !important;
+}

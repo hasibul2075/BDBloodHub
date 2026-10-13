@@ -68,6 +68,7 @@
 @media (max-width: 640px) {
   .donor-extra {
     max-width: 100%;
+    margin-bottom: 18px;
   }
 
   .donor-donated-btn {
