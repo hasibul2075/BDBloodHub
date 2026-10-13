@@ -22,6 +22,27 @@ console.log(
   "Supabase Publishable Key:",
   process.env.SUPABASE_PUBLISHABLE_KEY ? "Loaded" : "Missing"
 );
+// Returns the logged-in user when the request carries a valid Supabase
+// login token, otherwise null. Used to decide who may see donor phone numbers.
+async function getLoggedInUser(req) {
+  const authHeader = req.headers.authorization || "";
+  const token = authHeader.startsWith("Bearer ")
+    ? authHeader.slice(7).trim()
+    : "";
+
+  if (!token) return null;
+
+  try {
+    const { data, error } = await supabase.auth.getUser(token);
+
+    if (error || !data || !data.user) return null;
+
+    return data.user;
+  } catch {
+    return null;
+  }
+}
+
 // Home route
 app.get("/", (req, res) => {
   res.json({
@@ -174,6 +195,9 @@ app.get("/api/donors/search", async (req, res) => {
   try {
     const { blood_group, district, upazila } = req.query;
 
+    // Phone numbers are shown to logged-in users only (keeps donors safe from spam)
+    const loggedInUser = await getLoggedInUser(req);
+
         // Donors rest after giving blood (change 120 to 90 for 3 months)
     const REST_DAYS = 120;
 
@@ -185,7 +209,7 @@ app.get("/api/donors/search", async (req, res) => {
 
     let query = supabase
       .from("donors")
-      .select("*")
+      .select("id, name, blood_group, district, upazila, available, phone")
       .eq("available", true)
       .or(
         `last_donation_date.is.null,last_donation_date.lte.${restCutoff}`
@@ -215,10 +239,17 @@ app.get("/api/donors/search", async (req, res) => {
       });
     }
 
+    // Remove the phone number before sending unless the visitor is logged in.
+    // (Email, user_id and last donation date are never sent here.)
+    const donors = data.map(({ phone, ...rest }) =>
+      loggedInUser ? { ...rest, phone } : rest
+    );
+
     res.json({
       success: true,
-      count: data.length,
-      donors: data,
+      count: donors.length,
+      logged_in: Boolean(loggedInUser),
+      donors,
     });
   } catch (error) {
     res.status(500).json({

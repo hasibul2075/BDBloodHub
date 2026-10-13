@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { FaPhoneAlt } from "react-icons/fa";
 import { t } from "../i18n";
+import { supabase } from "../supabase";
 
 function Donors() {
   const [donors, setDonors] = useState([]);
@@ -9,18 +10,35 @@ function Donors() {
   const [copied, setCopied] = useState(false);
 
   useEffect(() => {
-    fetch(
-      "https://bdbloodhub-backend.onrender.com/api/donors/search"
-    )
-      .then((res) => res.json())
-      .then((data) => {
+    const loadDonors = async () => {
+      try {
+        // Logged-in visitors send their token so the server includes phone numbers
+        const {
+          data: { session },
+        } = await supabase.auth.getSession();
+
+        const res = await fetch(
+          "https://bdbloodhub-backend.onrender.com/api/donors/search",
+          session
+            ? {
+                headers: {
+                  Authorization: `Bearer ${session.access_token}`,
+                },
+              }
+            : undefined
+        );
+
+        const data = await res.json();
+
         if (data.success) {
           setDonors(data.donors);
         }
-      })
-      .catch((err) =>
-        console.error("Donor load error:", err)
-      );
+      } catch (err) {
+        console.error("Donor load error:", err);
+      }
+    };
+
+    loadDonors();
   }, []);
     const copyPhone = async () => {
     if (!selectedDonor?.phone) return;
@@ -146,18 +164,44 @@ function Donors() {
               {selectedDonor.district}
             </p>
 
-            <div className="phone-box">
-              {selectedDonor.phone}
-            </div>
+            {selectedDonor.phone ? (
+              <>
+                <div className="phone-box">
+                  {selectedDonor.phone}
+                </div>
 
-            <button
-              type="button"
-              onClick={copyPhone}
-            >
-              {copied
-                ? t("copied")
-                : t("copy_number")}
-            </button>
+                <button
+                  type="button"
+                  onClick={copyPhone}
+                >
+                  {copied
+                    ? t("copied")
+                    : t("copy_number")}
+                </button>
+              </>
+            ) : (
+              <>
+                <p>{t("contact_login_text")}</p>
+
+                <button
+                  type="button"
+                  onClick={() => {
+                    window.location.href = "/login";
+                  }}
+                >
+                  {t("contact_login_btn")}
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => {
+                    window.location.href = "/register";
+                  }}
+                >
+                  {t("req_create_account")}
+                </button>
+              </>
+            )}
 
             <button
               type="button"

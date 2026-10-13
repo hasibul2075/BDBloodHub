@@ -290,6 +290,10 @@ export const translations = {
     // ----- home page: blood group quick search -----
     bg_tag: "QUICK SEARCH",
     bg_title: "Find by Blood Group",
+
+    // ----- contact modal: phone number needs login -----
+    contact_login_text: "Please login to see the donor's phone number. This keeps donors safe from spam.",
+    contact_login_btn: "Login to View Number",
   },
 
   bn: {
@@ -579,5 +583,9 @@ export const translations = {
     // ----- home page: blood group quick search -----
     bg_tag: "দ্রুত খুঁজুন",
     bg_title: "রক্তের গ্রুপ দিয়ে খুঁজুন",
+
+    // ----- contact modal: phone number needs login -----
+    contact_login_text: "ডোনারের ফোন নম্বর দেখতে অনুগ্রহ করে লগইন করুন। এতে ডোনাররা স্প্যাম থেকে সুরক্ষিত থাকেন।",
+    contact_login_btn: "নম্বর দেখতে লগইন করুন",
   },
 };

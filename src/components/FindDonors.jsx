@@ -9,6 +9,7 @@ import {
   FaCheck,
 } from "react-icons/fa";
 import { t } from "../i18n";
+import { supabase } from "../supabase";
 
 function FindDonors() {
   const [selectedDonor, setSelectedDonor] = useState(null);
@@ -161,7 +162,21 @@ function FindDonors() {
 
       console.log("SEARCH URL:", url);
 
-      const response = await fetch(url);
+      // Logged-in visitors send their token so the server includes phone numbers
+      const {
+        data: { session },
+      } = await supabase.auth.getSession();
+
+      const response = await fetch(
+        url,
+        session
+          ? {
+              headers: {
+                Authorization: `Bearer ${session.access_token}`,
+              },
+            }
+          : undefined
+      );
 
       const data = await response.json();
 
@@ -877,15 +892,39 @@ const copyPhone = async () => {
         {selectedDonor.location}
       </p>
 
-      <div className="phone-box">
-        {selectedDonor.phone}
-      </div>
+      {selectedDonor.phone ? (
+        <>
+          <div className="phone-box">
+            {selectedDonor.phone}
+          </div>
 
-      <button onClick={copyPhone}>
-        {t("copy_number")}
-      </button>
+          <button onClick={copyPhone}>
+            {t("copy_number")}
+          </button>
 
-      {copied && <p>{t("copied")}</p>}
+          {copied && <p>{t("copied")}</p>}
+        </>
+      ) : (
+        <>
+          <p>{t("contact_login_text")}</p>
+
+          <button
+            onClick={() => {
+              window.location.href = "/login";
+            }}
+          >
+            {t("contact_login_btn")}
+          </button>
+
+          <button
+            onClick={() => {
+              window.location.href = "/register";
+            }}
+          >
+            {t("req_create_account")}
+          </button>
+        </>
+      )}
 
       <button
         onClick={() =>
