@@ -6478,3 +6478,20 @@ body {
   align-self: start !important;
   transform: none !important;
 }
+/* ---------- language toggle ---------- */
+.lang-toggle {
+  padding: 8px 14px;
+  border: 1px solid #dc2626;
+  background: #fff;
+  color: #dc2626;
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.lang-toggle:hover {
+  background: #dc2626;
+  color: #fff;
+}

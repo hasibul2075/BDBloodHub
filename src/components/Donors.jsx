@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { FaPhoneAlt } from "react-icons/fa";
+import { t } from "../i18n";
 
 function Donors() {
   const [donors, setDonors] = useState([]);
@@ -39,11 +40,11 @@ function Donors() {
     <section className="donors">
       <div className="container">
         <span className="section-tag">
-          AVAILABLE DONORS
+          {t("dn_tag")}
         </span>
 
         <h2 className="section-title">
-          Find Blood Donors Near You
+          {t("fd_title")}
         </h2>
 
         <div className="donor-grid">
@@ -78,8 +79,8 @@ function Donors() {
                     }
                   >
                     {donor.available
-                      ? "Available Now"
-                      : "Currently Unavailable"}
+                      ? t("available_now")
+                      : t("currently_unavailable")}
                   </span>
                 </div>
 
@@ -96,9 +97,9 @@ function Donors() {
 >
   <FaPhoneAlt />
 
-  {donor.available
-    ? "Contact Donor"
-    : "Not Available"}
+    {donor.available
+    ? t("contact_donor")
+    : t("not_available")}
 </button>
               </div>
             ))}
@@ -114,7 +115,7 @@ function Donors() {
                 )
               }
             >
-              Show More
+              {t("dn_show_more")}
             </button>
           </div>
         )}
@@ -128,20 +129,20 @@ function Donors() {
             className="contact-modal"
             onClick={(e) => e.stopPropagation()}
           >
-            <h3>Contact Donor</h3>
+            <h3>{t("contact_donor")}</h3>
 
             <p>
-              <strong>Name:</strong>{" "}
+              <strong>{t("name_label")}:</strong>{" "}
               {selectedDonor.name}
             </p>
 
             <p>
-              <strong>Blood Group:</strong>{" "}
+              <strong>{t("blood_group")}:</strong>{" "}
               {selectedDonor.blood_group}
             </p>
 
             <p>
-              <strong>Location:</strong>{" "}
+              <strong>{t("location_label")}:</strong>{" "}
               {selectedDonor.district}
             </p>
 
@@ -154,8 +155,8 @@ function Donors() {
               onClick={copyPhone}
             >
               {copied
-                ? "Copied!"
-                : "Copy Number"}
+                ? t("copied")
+                : t("copy_number")}
             </button>
 
             <button
@@ -164,7 +165,7 @@ function Donors() {
                 setSelectedDonor(null)
               }
             >
-              Close
+              {t("close")}
             </button>
           </div>
         </div>

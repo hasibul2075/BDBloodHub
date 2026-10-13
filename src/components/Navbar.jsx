@@ -1,18 +1,33 @@
 import { useEffect, useState } from "react";
 
-import { FaBars, FaTimes } from "react-icons/fa";
+import { FaBars, FaTimes, FaUserCircle } from "react-icons/fa";
 
 import { supabase } from "../supabase";
-import { FaUserCircle } from "react-icons/fa";
+import { t, getLang, setLang } from "../i18n";
+
+// [link, translation key]
+const NAV_LINKS = [
+  ["/", "nav_home"],
+  ["/find-donors", "nav_find_donors"],
+  ["/become-donor", "nav_become_donor"],
+  ["/blood-requests", "nav_blood_requests"],
+  ["/about", "nav_about"],
+];
 
 function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [user, setUser] = useState(null);
 
   const currentPath = window.location.pathname;
+  const lang = getLang();
 
   const isActive = (path) => {
     return currentPath === path;
+  };
+
+  // The button shows the language you will switch TO
+  const toggleLang = () => {
+    setLang(lang === "bn" ? "en" : "bn");
   };
 
   useEffect(() => {
@@ -54,7 +69,7 @@ function Navbar() {
   const userName =
     user?.user_metadata?.name ||
     user?.email?.split("@")[0] ||
-    "User";
+    t("nav_user_fallback");
 
   return (
     <nav className="navbar">
@@ -71,89 +86,47 @@ function Navbar() {
 
         {/* Desktop Menu */}
         <ul className="nav-links">
-          <li>
-            <a
-              href="/"
-              className={
-                isActive("/") ? "active" : ""
-              }
-            >
-              Home
-            </a>
-          </li>
-
-          <li>
-            <a
-              href="/find-donors"
-              className={
-                isActive("/find-donors")
-                  ? "active"
-                  : ""
-              }
-            >
-              Find Donors
-            </a>
-          </li>
-
-          <li>
-            <a
-              href="/become-donor"
-              className={
-                isActive("/become-donor")
-                  ? "active"
-                  : ""
-              }
-            >
-              Become a Donor
-            </a>
-          </li>
-          <li>
-            <a
-              href="/blood-requests"
-              className={
-                isActive("/blood-requests")
-                  ? "active"
-                  : ""
-              }
-            >
-              Blood Requests
-            </a>
-          </li>
-          <li>
-            <a
-              href="/about"
-              className={
-                isActive("/about")
-                  ? "active"
-                  : ""
-              }
-            >
-              About Us
-            </a>
-          </li>
+          {NAV_LINKS.map(([href, key]) => (
+            <li key={href}>
+              <a
+                href={href}
+                className={isActive(href) ? "active" : ""}
+              >
+                {t(key)}
+              </a>
+            </li>
+          ))}
         </ul>
 
         {/* Desktop Buttons */}
         <div className="nav-btns">
+          <button
+            type="button"
+            className="lang-toggle"
+            onClick={toggleLang}
+          >
+            {lang === "bn" ? "English" : "বাংলা"}
+          </button>
+
           {user ? (
             <>
- <a
-  href="/my-profile"
-  className="user-profile-link"
-  title="My Profile"
->
-  <FaUserCircle className="user-profile-icon" />
-  <span className="user-greeting">
-    Hi, {userName}
-  </span>
-</a>
+              <a
+                href="/my-profile"
+                className="user-profile-link"
+                title={t("nav_my_profile")}
+              >
+                <FaUserCircle className="user-profile-icon" />
+                <span className="user-greeting">
+                  {t("nav_hi", { name: userName })}
+                </span>
+              </a>
 
               <button
                 type="button"
                 className="login-btn"
                 onClick={handleLogout}
               >
-                Logout
+                {t("nav_logout")}
               </button>
             </>
           ) : (
@@ -162,14 +135,14 @@ function Navbar() {
                 href="/login"
                 className="login-btn"
               >
-                Login
+                {t("nav_login")}
               </a>
 
               <a
                 href="/register"
                 className="register-btn"
               >
-                Register
+                {t("nav_register")}
               </a>
             </>
           )}
@@ -182,7 +155,7 @@ function Navbar() {
           onClick={() =>
             setMenuOpen(!menuOpen)
           }
-          aria-label="Toggle menu"
+          aria-label={t("nav_toggle_menu")}
         >
           {menuOpen ? (
             <FaTimes />
@@ -198,92 +171,47 @@ function Navbar() {
           menuOpen ? "show" : ""
         }`}
       >
-        <a
-          href="/"
-          className={
-            isActive("/") ? "active" : ""
-          }
-          onClick={() =>
-            setMenuOpen(false)
-          }
-        >
-          Home
-        </a>
-
-        <a
-          href="/find-donors"
-          className={
-            isActive("/find-donors")
-              ? "active"
-              : ""
-          }
-          onClick={() =>
-            setMenuOpen(false)
-          }
-        >
-          Find Donors
-        </a>
-
-        <a
-          href="/become-donor"
-          className={
-            isActive("/become-donor")
-              ? "active"
-              : ""
-          }
-          onClick={() =>
-            setMenuOpen(false)
-          }
-        >
-          Become a Donor
-        </a>
-        <a
-          href="/blood-requests"
-          className={
-            isActive("/blood-requests")
-              ? "active"
-              : ""
-          }
-          onClick={() =>
-            setMenuOpen(false)
-          }
-        >
-          Blood Requests
-        </a>
-        <a
-          href="/about"
-          className={
-            isActive("/about")
-              ? "active"
-              : ""
-          }
-          onClick={() =>
-            setMenuOpen(false)
-          }
-        >
-          About Us
-        </a>
+        {NAV_LINKS.map(([href, key]) => (
+          <a
+            key={href}
+            href={href}
+            className={isActive(href) ? "active" : ""}
+            onClick={() =>
+              setMenuOpen(false)
+            }
+          >
+            {t(key)}
+          </a>
+        ))}
 
         <div className="mobile-menu-buttons">
-  {user ? (
-    <>
-      <a
-        href="/my-profile"
-        className="user-greeting"
-        onClick={() => setMenuOpen(false)}
-      >
-        Hi, {userName}
-      </a>
+          <button
+            type="button"
+            className="lang-toggle"
+            onClick={toggleLang}
+          >
+            {lang === "bn" ? "English" : "বাংলা"}
+          </button>
 
-      <button
-        type="button"
-        className="login-btn"
-        onClick={handleLogout}
-      >
-        Logout
-      </button>
-    </>
-  ) : (
+          {user ? (
+            <>
+              <a
+                href="/my-profile"
+                className="user-greeting"
+                onClick={() => setMenuOpen(false)}
+              >
+                {t("nav_hi", { name: userName })}
+              </a>
+
+              <button
+                type="button"
+                className="login-btn"
+                onClick={handleLogout}
+              >
+                {t("nav_logout")}
+              </button>
+            </>
+          ) : (
             <>
               <a
                 href="/login"
@@ -292,7 +220,7 @@ function Navbar() {
                   setMenuOpen(false)
                 }
               >
-                Login
+                {t("nav_login")}
               </a>
 
               <a
@@ -302,7 +230,7 @@ function Navbar() {
                   setMenuOpen(false)
                 }
               >
-                Register
+                {t("nav_register")}
               </a>
             </>
           )}

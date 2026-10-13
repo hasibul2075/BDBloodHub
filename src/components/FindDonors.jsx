@@ -8,6 +8,7 @@ import {
   FaChevronDown,
   FaCheck,
 } from "react-icons/fa";
+import { t } from "../i18n";
 
 function FindDonors() {
   const [selectedDonor, setSelectedDonor] = useState(null);
@@ -165,10 +166,7 @@ function FindDonors() {
       const data = await response.json();
 
       if (!response.ok || !data.success) {
-        throw new Error(
-          data.message ||
-            "Failed to fetch donors."
-        );
+        throw new Error(t("fd_err_fetch"));
       }
 
       setDonors(data.donors || []);
@@ -178,9 +176,8 @@ function FindDonors() {
         error
       );
 
-      setError(
-        error.message ||
-          "Something went wrong while loading donors."
+            setError(
+        error.message || t("fd_err_generic")
       );
 
       setDonors([]);
@@ -378,16 +375,15 @@ const copyPhone = async () => {
       <section className="find-donors-header">
         <div className="container">
           <span className="section-tag">
-            FIND DONORS
+            {t("fd_tag")}
           </span>
 
           <h1>
-            Find Blood Donors Near You
+            {t("fd_title")}
           </h1>
 
           <p>
-            Search for available blood donors
-            by blood group and location.
+            {t("fd_subtitle")}
           </p>
         </div>
       </section>
@@ -426,10 +422,10 @@ const copyPhone = async () => {
                   </span>
 
                   <span>
-                    Blood Group:{" "}
+                    {t("blood_group")}:{" "}
                     <strong>
                       {bloodGroup === "All"
-                        ? "All"
+                        ? t("all")
                         : bloodGroup}
                     </strong>
                   </span>
@@ -468,7 +464,7 @@ const copyPhone = async () => {
                       </span>
 
                       <span>
-                        Blood Group: All
+                        {t("fd_blood_group_all")}
                       </span>
 
                     </span>
@@ -528,7 +524,7 @@ const copyPhone = async () => {
 
                 <input
                   type="text"
-                  placeholder="Enter Location..."
+                  placeholder={t("fd_location_placeholder")}
                   value={location}
                   onChange={
                     handleLocationChange
@@ -615,8 +611,8 @@ const copyPhone = async () => {
               <FaSearch />
 
               {loading
-                ? "Searching..."
-                : "Search Donors"}
+                ? t("fd_searching")
+                : t("fd_search")}
             </button>
 
             {/* RESET BUTTON */}
@@ -627,7 +623,7 @@ const copyPhone = async () => {
               onClick={handleReset}
               disabled={loading}
             >
-              Reset
+              {t("fd_reset")}
             </button>
 
           </div>
@@ -646,11 +642,11 @@ const copyPhone = async () => {
             <div>
 
               <span className="section-tag">
-                DONOR RESULTS
+                {t("fd_results_tag")}
               </span>
 
               <h2>
-                Available Donors
+                {t("fd_results_title")}
               </h2>
 
             </div>
@@ -658,12 +654,12 @@ const copyPhone = async () => {
             {!loading &&
               !error && (
                 <span className="result-count">
-                  {formattedDonors.length}{" "}
-                  {formattedDonors.length ===
-                  1
-                    ? "Donor"
-                    : "Donors"}{" "}
-                  Found
+                                    {t(
+                    formattedDonors.length === 1
+                      ? "fd_found_one"
+                      : "fd_found_many",
+                    { n: formattedDonors.length }
+                  )}
                 </span>
               )}
 
@@ -682,12 +678,11 @@ const copyPhone = async () => {
               </div>
 
               <h3>
-                Finding donors...
+                {t("fd_loading_title")}
               </h3>
 
               <p>
-                Please wait while we search
-                the donor database.
+                {t("fd_loading_text")}
               </p>
 
             </div>
@@ -705,7 +700,7 @@ const copyPhone = async () => {
               </div>
 
               <h3>
-                Unable to load donors
+                {t("fd_error_title")}
               </h3>
 
               <p>
@@ -722,7 +717,7 @@ const copyPhone = async () => {
                   )
                 }
               >
-                Try Again
+                {t("fd_try_again")}
               </button>
 
             </div>
@@ -793,8 +788,8 @@ const copyPhone = async () => {
                         <span className="status-dot"></span>
 
                         {donor.available
-                          ? "Available Now"
-                          : "Currently Unavailable"}
+                          ? t("available_now")
+                          : t("currently_unavailable")}
 
                       </span>
 
@@ -816,8 +811,8 @@ const copyPhone = async () => {
                       <FaPhoneAlt />
 
                       {donor.available
-                        ? "Contact Donor"
-                        : "Not Available"}
+                        ? t("contact_donor")
+                        : t("not_available")}
 
                     </button>
 
@@ -841,13 +836,11 @@ const copyPhone = async () => {
               </div>
 
               <h3>
-                No donors found
+                {t("fd_none_title")}
               </h3>
 
               <p>
-                No donors match your
-                selected blood group and
-                location.
+                {t("fd_none_text")}
               </p>
 
               <button
@@ -855,7 +848,7 @@ const copyPhone = async () => {
                 className="no-donors-reset"
                 onClick={handleReset}
               >
-                Clear Filters
+                {t("fd_clear")}
               </button>
 
             </div>
@@ -867,20 +860,20 @@ const copyPhone = async () => {
 {selectedDonor && (
   <div className="contact-modal-overlay">
     <div className="contact-modal">
-      <h3>Contact Donor</h3>
+      <h3>{t("contact_donor")}</h3>
 
       <p>
-        <strong>Name:</strong>{" "}
+       <strong>{t("name_label")}:</strong>{" "}
         {selectedDonor.name}
       </p>
 
       <p>
-        <strong>Blood Group:</strong>{" "}
+        <strong>{t("blood_group")}:</strong>{" "}
         {selectedDonor.blood}
       </p>
 
       <p>
-        <strong>Location:</strong>{" "}
+        <strong>{t("location_label")}:</strong>{" "}
         {selectedDonor.location}
       </p>
 
@@ -889,17 +882,17 @@ const copyPhone = async () => {
       </div>
 
       <button onClick={copyPhone}>
-        Copy Number
+        {t("copy_number")}
       </button>
 
-      {copied && <p>Copied!</p>}
+      {copied && <p>{t("copied")}</p>}
 
       <button
         onClick={() =>
           setSelectedDonor(null)
         }
       >
-        Close
+        {t("close")}
       </button>
     </div>
   </div>

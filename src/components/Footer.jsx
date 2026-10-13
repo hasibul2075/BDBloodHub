@@ -1,3 +1,5 @@
+import { t } from "../i18n";
+
 function Footer() {
   return (
     <footer className="footer">
@@ -12,60 +14,60 @@ function Footer() {
           />
 
           <p>
-            Connecting blood donors with people in need.
+            {t("footer_tagline_1")}
             <br />
-            Together, we can save more lives.
+            {t("footer_tagline_2")}
           </p>
         </div>
 
 
         {/* QUICK LINKS */}
         <div className="footer-column">
-          <h3>Quick Links</h3>
+          <h3>{t("footer_quick_links")}</h3>
 
-          <a href="/">Home</a>
+          <a href="/">{t("nav_home")}</a>
 
           <a href="/find-donors">
-            Find Donors
+            {t("nav_find_donors")}
           </a>
 
           <a href="/become-donor">
-            Become a Donor
+            {t("nav_become_donor")}
           </a>
 
           <a href="/about">
-            About Us
+            {t("nav_about")}
           </a>
         </div>
 
 
         {/* GET INVOLVED */}
         <div className="footer-column">
-          <h3>Get Involved</h3>
+          <h3>{t("footer_get_involved")}</h3>
 
           <a href="/become-donor">
-            Register as Donor
+            {t("footer_register_donor")}
           </a>
 
           <a href="/find-donors">
-            Find Blood
+            {t("footer_find_blood")}
           </a>
 
           <a href="/find-donors">
-            Emergency Request
+            {t("footer_emergency")}
           </a>
 
           <a href="mailto:support@bdbloodhub.com">
-            Contact Us
+            {t("footer_contact_us")}
           </a>
         </div>
 
 
         {/* CONTACT */}
         <div className="footer-column">
-          <h3>Contact</h3>
+          <h3>{t("footer_contact")}</h3>
 
-          <p>📍 Bangladesh</p>
+          <p>📍 {t("footer_country")}</p>
 
           <p>
             📧 support@bdbloodhub.com
@@ -80,7 +82,7 @@ function Footer() {
 
 
       <div className="footer-bottom">
-        © 2026 BD Blood Hub. All rights reserved.
+        {t("footer_rights")}
       </div>
     </footer>
   );
