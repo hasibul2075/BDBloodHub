@@ -1,4 +1,9 @@
 User-agent: *
 Allow: /
+Disallow: /admin
+Disallow: /my-profile
+Disallow: /my-requests
+Disallow: /reset-password
+Disallow: /forgot-password
 
 Sitemap: https://bdbloodhub.com/sitemap.xml
