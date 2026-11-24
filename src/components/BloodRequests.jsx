@@ -16,6 +16,7 @@ import {
 import { supabase } from "../supabase";
 import { t, DATE_LOCALE } from "../i18n";
 import ShareRequest from "./ShareRequest";
+import { placeText } from "../utils/bdLocations";
 import "../requests.css";
 
 const BLOOD_GROUPS = ["A+", "A-", "B+", "B-", "O+", "O-", "AB+", "AB-"];
@@ -123,7 +124,7 @@ function BloodRequests() {
 
         if (!q) return true;
 
-        return [r.district, r.hospital, r.patient_name]
+        return [r.upazila, r.district, r.hospital, r.patient_name]
           .filter(Boolean)
           .some((v) => v.toLowerCase().includes(q));
       })
@@ -302,7 +303,7 @@ function BloodRequests() {
                   </div>
                   <div>
                     <FaMapMarkerAlt />
-                    <span>{r.district}</span>
+                    <span>{placeText(r.upazila, r.district)}</span>
                   </div>
                   <div>
                     <FaCalendarAlt />
@@ -361,7 +362,7 @@ function BloodRequests() {
 
             <p>
               <strong>{t("br_hospital")}</strong> {contactRequest.hospital},{" "}
-              {contactRequest.district}
+              {placeText(contactRequest.upazila, contactRequest.district)}
             </p>
 
             <p>

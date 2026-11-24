@@ -15,6 +15,7 @@ import {
 import { supabase } from "../supabase";
 import { t, DATE_LOCALE } from "../i18n";
 import ShareRequest from "./ShareRequest";
+import { placeText } from "../utils/bdLocations";
 import "../requests.css";
 
 const STATUS = {
@@ -300,7 +301,7 @@ function MyRequests() {
                     </div>
                     <div>
                       <FaMapMarkerAlt />
-                      <span>{r.district}</span>
+                      <span>{placeText(r.upazila, r.district)}</span>
                     </div>
                     <div>
                       <FaCalendarAlt />

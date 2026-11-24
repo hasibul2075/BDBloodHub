@@ -23,6 +23,8 @@ import {
   todayISO,
   REST_DAYS,
 } from "../utils/donorEligibility";
+import DistrictInput from "./DistrictInput";
+import UpazilaInput from "./UpazilaInput";
 import "../donor.css";
 
 function MyDonorProfile() {
@@ -788,18 +790,23 @@ function MyDonorProfile() {
                     <FaMapMarkerAlt /> District
                   </label>
 
-                  <div className="auth-input-wrapper">
-                    <FaMapMarkerAlt />
+                  <DistrictInput
+                    id="profile-district"
+                    value={formData.district}
+                    onChange={(e) => {
+                      handleChange(e);
 
-                    <input
-                      id="profile-district"
-                      name="district"
-                      type="text"
-                      value={formData.district}
-                      onChange={handleChange}
-                      required
-                    />
-                  </div>
+                      if (e.target.value !== formData.district) {
+                        setFormData((prev) => ({
+                          ...prev,
+                          upazila: "",
+                        }));
+                      }
+                    }}
+                    required
+                    wrapperClassName="auth-input-wrapper"
+                    icon={<FaMapMarkerAlt />}
+                  />
                 </div>
 
                 <div className="auth-form-group">
@@ -807,18 +814,15 @@ function MyDonorProfile() {
                     <FaMapMarkerAlt /> Upazila
                   </label>
 
-                  <div className="auth-input-wrapper">
-                    <FaMapMarkerAlt />
-
-                    <input
-                      id="profile-upazila"
-                      name="upazila"
-                      type="text"
-                      value={formData.upazila}
-                      onChange={handleChange}
-                      required
-                    />
-                  </div>
+                  <UpazilaInput
+                    id="profile-upazila"
+                    district={formData.district}
+                    value={formData.upazila}
+                    onChange={handleChange}
+                    required
+                    wrapperClassName="auth-input-wrapper"
+                    icon={<FaMapMarkerAlt />}
+                  />
                 </div>
 
                 <div className="auth-form-group">

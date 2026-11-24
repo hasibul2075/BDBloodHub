@@ -5,6 +5,7 @@ import { FaWhatsapp, FaFacebookF, FaLink, FaCheck } from "react-icons/fa";
 import { t } from "../i18n";
 
 import "../requests.css";
+import { placeText } from "../utils/bdLocations";
 
 function formatDay(iso) {
   return new Date(`${iso}T00:00:00`).toLocaleDateString("en-GB", {
@@ -26,7 +27,7 @@ function buildMessage(request) {
     "",
     `রোগী: ${request.patient_name}`,
     `রক্তের গ্রুপ: ${request.blood_group} (${request.units} ব্যাগ)`,
-    `হাসপাতাল: ${request.hospital}, ${request.district}`,
+    `হাসপাতাল: ${request.hospital}, ${placeText(request.upazila, request.district)}`,
     `কবে লাগবে: ${formatDay(request.needed_date)}`,
     `যোগাযোগ: ${request.contact_name} - ${request.contact_phone}`,
     "",

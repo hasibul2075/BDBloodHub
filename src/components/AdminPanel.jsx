@@ -14,6 +14,8 @@ import {
 } from "react-icons/fa";
 
 import { supabase } from "../supabase";
+import DistrictInput from "./DistrictInput";
+import UpazilaInput from "./UpazilaInput";
 import "../admin.css";
 
 // Admin email comes from .env (VITE_ADMIN_EMAIL).
@@ -656,17 +658,22 @@ function AdminPanel() {
 
               <label>
                 District *
-                <input
-                  name="district"
+                <DistrictInput
                   value={form.district}
-                  onChange={handleFormChange}
+                  onChange={(e) => {
+                    handleFormChange(e);
+
+                    if (e.target.value !== form.district) {
+                      setForm((prev) => ({ ...prev, upazila: "" }));
+                    }
+                  }}
                 />
               </label>
 
               <label>
                 Upazila *
-                <input
-                  name="upazila"
+                <UpazilaInput
+                  district={form.district}
                   value={form.upazila}
                   onChange={handleFormChange}
                 />

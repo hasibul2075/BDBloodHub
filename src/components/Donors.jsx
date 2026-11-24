@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { FaPhoneAlt } from "react-icons/fa";
 import { t } from "../i18n";
 import { supabase } from "../supabase";
+import { placeText } from "../utils/bdLocations";
 
 function Donors() {
   const [donors, setDonors] = useState([]);
@@ -80,7 +81,7 @@ function Donors() {
 
                   <div>
                     <h3>{donor.name}</h3>
-                    <p>{donor.district}</p>
+                    <p>{placeText(donor.upazila, donor.district)}</p>
                   </div>
                 </div>
 
@@ -161,7 +162,7 @@ function Donors() {
 
             <p>
               <strong>{t("location_label")}:</strong>{" "}
-              {selectedDonor.district}
+              {placeText(selectedDonor.upazila, selectedDonor.district)}
             </p>
 
             {selectedDonor.phone ? (

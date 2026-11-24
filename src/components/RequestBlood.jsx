@@ -10,6 +10,8 @@ import {
 
 import { supabase } from "../supabase";
 import { t } from "../i18n";
+import { districtMatches } from "../utils/bdLocations";
+import UpazilaInput from "./UpazilaInput";
 import "../requests.css";
 
 const BLOOD_GROUPS = ["A+", "A-", "B+", "B-", "O+", "O-", "AB+", "AB-"];
@@ -46,6 +48,7 @@ const emptyForm = {
   units: "1",
   hospital: "",
   district: "",
+  upazila: "",
   needed_date: "",
   urgent: false,
   contact_name: "",
@@ -108,8 +111,8 @@ function RequestBlood() {
 
   const districtQuery = form.district.trim().toLowerCase();
 
-  const filteredDistricts = DISTRICTS.filter((d) =>
-    d.toLowerCase().includes(districtQuery)
+  const filteredDistricts = DISTRICTS.filter(
+    (d) => !districtQuery || districtMatches(d, form.district)
   );
 
   const handleChange = (e) => {
@@ -135,6 +138,7 @@ function RequestBlood() {
       units,
       hospital: form.hospital.trim(),
       district: form.district.trim(),
+      upazila: form.upazila.trim() || null,
       needed_date: form.needed_date,
       urgent: form.urgent,
       contact_name: form.contact_name.trim(),
@@ -359,7 +363,7 @@ function RequestBlood() {
               />
             </label>
 
-            <label className="req-field">
+            <label className="req-field req-full">
               {t("rb_hospital")}
               <input
                 name="hospital"
@@ -382,6 +386,7 @@ function RequestBlood() {
                   value={form.district}
                   onChange={(e) => {
                     handleChange(e);
+                    setForm((prev) => ({ ...prev, upazila: "" }));
                     setIsDistrictOpen(true);
                     setIsBloodOpen(false);
                   }}
@@ -403,7 +408,7 @@ function RequestBlood() {
                     className="req-loc-clear"
                     aria-label={t("rb_clear_district")}
                     onClick={() => {
-                      setForm((prev) => ({ ...prev, district: "" }));
+                      setForm((prev) => ({ ...prev, district: "", upazila: "" }));
                       setIsDistrictOpen(true);
                     }}
                   >
@@ -420,7 +425,7 @@ function RequestBlood() {
                       key={d}
                       className="req-loc-option"
                       onClick={() => {
-                        setForm((prev) => ({ ...prev, district: d }));
+                        setForm((prev) => ({ ...prev, district: d, upazila: "" }));
                         setError("");
                         setIsDistrictOpen(false);
                       }}
@@ -432,6 +437,19 @@ function RequestBlood() {
                   ))}
                 </div>
               )}
+            </div>
+
+            <div className="req-field">
+              <span>{t("rb_upazila")}</span>
+
+              <UpazilaInput
+                district={form.district}
+                value={form.upazila}
+                onChange={handleChange}
+                placeholder={t("rb_upazila_placeholder")}
+                wrapperClassName="req-loc"
+                icon={<FaMapMarkerAlt className="req-loc-icon" />}
+              />
             </div>
 
             <label className="req-field">

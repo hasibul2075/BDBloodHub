@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { supabase } from "../supabase";
 import { t } from "../i18n";
+import { getUpazilas, districtMatches } from "../utils/bdLocations";
 
 import {
   FaUser,
@@ -20,6 +21,7 @@ function BecomeDonor() {
     phone: "",
     email: "",
     location: "",
+    upazila: "",
     lastDonation: "",
     available: "Yes",
   });
@@ -108,12 +110,10 @@ function BecomeDonor() {
     "Thakurgaon",
   ];
 
-  const filteredDistricts =
+    const filteredDistricts =
     formData.location.trim().length >= 2
       ? districts.filter((district) =>
-          district
-            .toLowerCase()
-            .includes(formData.location.trim().toLowerCase())
+          districtMatches(district, formData.location)
         )
       : [];
 
@@ -138,12 +138,13 @@ function BecomeDonor() {
     setError("");
   };
 
-  const handleLocationChange = (e) => {
+    const handleLocationChange = (e) => {
     const value = e.target.value;
 
     setFormData((prev) => ({
       ...prev,
       location: value,
+      upazila: "",
     }));
 
     setLocationOpen(value.trim().length >= 2);
@@ -154,11 +155,11 @@ function BecomeDonor() {
     setFormData((prev) => ({
       ...prev,
       location: district,
+      upazila: "",
     }));
 
     setLocationOpen(false);
   };
-
   // ===============================
   // SUBMIT DONOR TO BACKEND
   // ===============================
@@ -194,7 +195,7 @@ const handleSubmit = async (e) => {
           phone: formData.phone,
           blood_group: formData.blood,
           district: formData.location,
-          upazila: formData.location,
+                    upazila: formData.upazila,
           last_donation_date:
             formData.lastDonation || null,
           available: formData.available === "Yes",
@@ -503,7 +504,35 @@ const handleSubmit = async (e) => {
                     )}
                 </div>
               </div>
+              {/* UPAZILA */}
+              <div className="form-group">
+                <label htmlFor="upazila">
+                  {t("bd_upazila")}
+                </label>
 
+                <div className="input-wrapper">
+                  <FaMapMarkerAlt />
+
+                  <input
+                    id="upazila"
+                    type="text"
+                    name="upazila"
+                    list="upazila-list"
+                    autoComplete="off"
+                    placeholder={t("bd_upazila_ph")}
+                    value={formData.upazila}
+                    onChange={handleChange}
+                    required
+                  />
+
+                  <datalist id="upazila-list">
+                    {getUpazilas(formData.location).map((u) => (
+                      <option key={u} value={u} />
+                    ))}
+                  </datalist>
+                </div>
+              </div>
+              
               {/* LAST DONATION */}
               <div className="form-group">
                 <label htmlFor="lastDonation">

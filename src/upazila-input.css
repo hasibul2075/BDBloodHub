@@ -1,0 +1,156 @@
+/* উপজেলা সাজেশন ড্রপডাউন (UpazilaInput) */
+
+.upz-wrap {
+  position: relative;
+  width: 100%;
+}
+
+.upz-dropdown {
+  position: absolute;
+  z-index: 80;
+
+  top: calc(100% + 6px);
+  left: 0;
+
+  width: 100%;
+  max-height: 240px;
+
+  overflow-y: auto;
+
+  padding: 6px;
+
+  background: #ffffff;
+
+  border: 1px solid #e5e7eb;
+  border-radius: 11px;
+
+  box-shadow:
+    0 14px 30px rgba(15, 23, 42, 0.09),
+    0 3px 8px rgba(15, 23, 42, 0.04);
+
+  box-sizing: border-box;
+}
+
+.upz-option {
+  width: 100%;
+  min-height: 38px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+
+  padding: 8px 10px;
+
+  border: none;
+  border-radius: 8px;
+
+  background: transparent;
+  color: #374151;
+
+  font-family: inherit;
+  font-size: 13px;
+  text-align: left;
+
+  cursor: pointer;
+
+  box-sizing: border-box;
+
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.upz-option:hover {
+  background: #fef2f2;
+  color: #dc2626;
+}
+
+.upz-bn {
+  color: #6b7280;
+  font-size: 12.5px;
+}
+
+.upz-option:hover .upz-bn {
+  color: #dc2626;
+}
+
+/* ===================================== */
+/* হোমপেজের সার্চ বক্স (.search-box)     */
+/* ===================================== */
+
+/* .search-box button এর লাল স্টাইল যেন সাজেশনের বোতামে না লাগে */
+.search-box .upz-option {
+  height: auto;
+  min-height: 38px;
+
+  padding: 8px 10px;
+
+  background: transparent;
+  color: #374151;
+
+  border-radius: 8px;
+
+  font-size: 13px;
+  font-weight: 400;
+
+  box-shadow: none;
+  transform: none;
+}
+
+.search-box .upz-option:hover {
+  background: #fef2f2;
+  color: #dc2626;
+}
+
+.search-box .upz-option:hover .upz-bn {
+  color: #dc2626;
+}
+
+/* জেলার ড্রপডাউনের মতো জায়গা নিয়ে নামবে, নিচের সেকশনের ওপর ভাসবে না */
+.search-box .upz-dropdown {
+  position: static;
+  margin-top: 8px;
+  max-height: 260px;
+}
+
+/* ডেস্কটপ/ট্যাবলেটে: ১ম সারিতে ব্লাড গ্রুপ + জেলা, ২য় সারিতে উপজেলা + সার্চ বোতাম */
+@media (min-width: 769px) {
+  .search-box {
+    flex-wrap: wrap;
+  }
+
+  .search-box .hero-upazila-wrapper {
+    flex: 1 1 calc(100% - 140px);
+  }
+
+  /* ডেস্কটপ/ট্যাবলেটে তিনটা ড্রপডাউনই ভেসে থাকবে, নিচের ঘর সরবে না */
+  .search-box .blood-dropdown,
+  .search-box .location-dropdown,
+  .search-box .upz-dropdown {
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 0;
+
+    margin-top: 0;
+
+    z-index: 1000;
+  }
+}
+
+/* ===================================== */
+/* ডোনার খোঁজার পেজ (.find-search-box)   */
+/* ===================================== */
+
+/* ডেস্কটপ/ট্যাবলেটে ড্রপডাউন ভেসে থাকবে, সার্চ বক্স বড় হয়ে যাবে না */
+@media (min-width: 769px) {
+  .find-search-box .find-blood-dropdown,
+  .find-search-box .find-location-dropdown,
+  .find-search-box .upz-dropdown {
+    position: absolute;
+    top: calc(100% + 6px);
+    left: 0;
+
+    margin-top: 0;
+
+    z-index: 1000;
+  }
+}

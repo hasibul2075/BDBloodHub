@@ -3,6 +3,7 @@ import { useEffect, useMemo, useState } from "react";
 import { FaTint, FaSignOutAlt, FaLock } from "react-icons/fa";
 
 import { supabase } from "../supabase";
+import { placeText } from "../utils/bdLocations";
 import "../admin.css";
 
 const ADMIN_EMAIL = (import.meta.env.VITE_ADMIN_EMAIL || "")
@@ -333,7 +334,7 @@ function AdminRequests() {
                     </td>
                     <td data-label="Hospital / District">
                       {r.hospital}
-                      <div className="adm-sub">{r.district}</div>
+                      <div className="adm-sub">{placeText(r.upazila, r.district)}</div>
                     </td>
                     <td data-label="Needed">
                       {formatDate(r.needed_date)}

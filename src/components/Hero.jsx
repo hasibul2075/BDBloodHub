@@ -1,12 +1,15 @@
 import { useState } from "react";
 import { FaTint, FaChevronDown, FaCheck, FaMapMarkerAlt } from "react-icons/fa";
 import { t } from "../i18n";
+import { districtMatches, normalizeDistrict } from "../utils/bdLocations";
+import UpazilaInput from "./UpazilaInput";
 
 function Hero() {
   const [selectedGroup, setSelectedGroup] = useState("All");
   const [isBloodOpen, setIsBloodOpen] = useState(false);
 
   const [location, setLocation] = useState("");
+  const [upazila, setUpazila] = useState("");
   const [isLocationOpen, setIsLocationOpen] = useState(false);
 
   const bloodGroups = [
@@ -93,7 +96,7 @@ function Hero() {
 const filteredDistricts =
   searchText.length >= 2
     ? districts.filter((district) =>
-        district.toLowerCase().includes(searchText)
+        districtMatches(district, location)
       )
     : [];
 
@@ -104,6 +107,7 @@ const filteredDistricts =
 
   const handleLocationSelect = (district) => {
     setLocation(district);
+    setUpazila("");
     setIsLocationOpen(false);
   };
 
@@ -111,6 +115,7 @@ const filteredDistricts =
     const value = e.target.value;
 
     setLocation(value);
+    setUpazila("");
     setIsLocationOpen(true);
   };
 
@@ -127,7 +132,11 @@ const filteredDistricts =
     }
 
     if (location.trim()) {
-      params.set("location", location.trim());
+      params.set("location", normalizeDistrict(location));
+    }
+
+    if (upazila.trim()) {
+      params.set("upazila", upazila.trim());
     }
 
     window.location.href = `/find-donors?${params.toString()}`;
@@ -291,6 +300,7 @@ const filteredDistricts =
                     onMouseDown={(e) => {
                       e.preventDefault();
                       setLocation("");
+                      setUpazila("");
                       setIsLocationOpen(true);
                     }}
                   >
@@ -331,6 +341,18 @@ const filteredDistricts =
                 </div>
               )}
 
+            </div>
+
+            {/* UPAZILA */}
+            <div className="location-wrapper hero-upazila-wrapper">
+              <UpazilaInput
+                district={location}
+                value={upazila}
+                onChange={(e) => setUpazila(e.target.value)}
+                placeholder={t("fd_upazila_placeholder")}
+                wrapperClassName="location-input-wrapper"
+                icon={<FaMapMarkerAlt className="location-icon" />}
+              />
             </div>
 
             {/* SEARCH BUTTON */}

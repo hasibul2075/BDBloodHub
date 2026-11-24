@@ -10,6 +10,12 @@ import {
 } from "react-icons/fa";
 import { t } from "../i18n";
 import { supabase } from "../supabase";
+import {
+  districtMatches,
+  normalizeDistrict,
+  placeText,
+} from "../utils/bdLocations";
+import UpazilaInput from "./UpazilaInput";
 
 function FindDonors() {
   const [selectedDonor, setSelectedDonor] = useState(null);
@@ -18,9 +24,11 @@ function FindDonors() {
 
   const initialBlood = params.get("blood") || "All";
   const initialLocation = params.get("location") || "";
+  const initialUpazila = params.get("upazila") || "";
 
   const [bloodGroup, setBloodGroup] = useState(initialBlood);
   const [location, setLocation] = useState(initialLocation);
+  const [upazila, setUpazila] = useState(initialUpazila);
 
   const [isBloodOpen, setIsBloodOpen] = useState(false);
   const [isLocationOpen, setIsLocationOpen] = useState(false);
@@ -114,9 +122,7 @@ function FindDonors() {
   const filteredDistricts =
     location.trim().length >= 2
       ? districts.filter((district) =>
-          district
-            .toLowerCase()
-            .includes(location.trim().toLowerCase())
+          districtMatches(district, location)
         )
       : [];
 
@@ -126,7 +132,8 @@ function FindDonors() {
 
   const fetchDonors = async (
     selectedBlood = bloodGroup,
-    selectedLocation = location
+    selectedLocation = location,
+    selectedUpazila = upazila
   ) => {
     setLoading(true);
     setError("");
@@ -150,7 +157,17 @@ function FindDonors() {
       ) {
         queryParams.set(
           "district",
-          selectedLocation.trim()
+          normalizeDistrict(selectedLocation)
+        );
+      }
+
+      if (
+        selectedUpazila &&
+        selectedUpazila.trim() !== ""
+      ) {
+        queryParams.set(
+          "upazila",
+          selectedUpazila.trim()
         );
       }
 
@@ -208,7 +225,8 @@ function FindDonors() {
   useEffect(() => {
     fetchDonors(
       initialBlood,
-      initialLocation
+      initialLocation,
+      initialUpazila
     );
   }, []);
 
@@ -220,7 +238,7 @@ function FindDonors() {
   setBloodGroup(group);
   setIsBloodOpen(false);
 
-  await fetchDonors(group, location);
+  await fetchDonors(group, location, upazila);
 
   const newParams = new URLSearchParams();
 
@@ -230,6 +248,10 @@ function FindDonors() {
 
   if (location.trim()) {
     newParams.set("location", location.trim());
+  }
+
+  if (upazila.trim()) {
+    newParams.set("upazila", upazila.trim());
   }
 
   const query = newParams.toString();
@@ -248,9 +270,10 @@ function FindDonors() {
 
   const handleLocationSelect = async (district) => {
   setLocation(district);
+  setUpazila("");
   setIsLocationOpen(false);
 
-  await fetchDonors(bloodGroup, district);
+  await fetchDonors(bloodGroup, district, "");
 
   const newParams = new URLSearchParams();
 
@@ -281,6 +304,7 @@ function FindDonors() {
     const value = e.target.value;
 
     setLocation(value);
+    setUpazila("");
 
     if (value.trim().length >= 2) {
       setIsLocationOpen(true);
@@ -296,6 +320,7 @@ function FindDonors() {
   const handleSearch = async () => {
     const selectedBlood = bloodGroup;
     const selectedLocation = location;
+    const selectedUpazila = upazila;
 
     const newParams = new URLSearchParams();
 
@@ -310,6 +335,13 @@ function FindDonors() {
       newParams.set(
         "location",
         selectedLocation.trim()
+      );
+    }
+
+    if (selectedUpazila.trim()) {
+      newParams.set(
+        "upazila",
+        selectedUpazila.trim()
       );
     }
 
@@ -328,7 +360,8 @@ function FindDonors() {
 
     await fetchDonors(
       selectedBlood,
-      selectedLocation
+      selectedLocation,
+      selectedUpazila
     );
   };
 
@@ -339,6 +372,7 @@ function FindDonors() {
   const handleReset = async () => {
     setBloodGroup("All");
     setLocation("");
+    setUpazila("");
 
     setIsBloodOpen(false);
     setIsLocationOpen(false);
@@ -351,6 +385,7 @@ function FindDonors() {
 
     await fetchDonors(
       "All",
+      "",
       ""
     );
   };
@@ -374,7 +409,7 @@ const copyPhone = async () => {
       id: donor.id,
       name: donor.name,
       blood: donor.blood_group,
-      location: donor.district,
+      location: placeText(donor.upazila, donor.district),
       phone: donor.phone,
       available: donor.available,
     }));
@@ -571,6 +606,7 @@ const copyPhone = async () => {
                       e.preventDefault();
 
                       setLocation("");
+                      setUpazila("");
                       setIsLocationOpen(
                         false
                       );
@@ -613,6 +649,21 @@ const copyPhone = async () => {
                   </div>
                 )}
 
+            </div>
+
+            {/* UPAZILA */}
+
+            <div className="find-location-wrapper">
+              <UpazilaInput
+                district={location}
+                value={upazila}
+                onChange={(e) => setUpazila(e.target.value)}
+                placeholder={t("fd_upazila_placeholder")}
+                wrapperClassName="find-location-input"
+                icon={
+                  <FaMapMarkerAlt className="find-location-icon" />
+                }
+              />
             </div>
 
             {/* SEARCH BUTTON */}
